@@ -7,9 +7,10 @@ export default defineConfig({
   plugins: [
     react(),
     Pages({
-      dirs: 'src/pages',
+      dirs: 'src/app',
       extensions: ['tsx'],
       routeStyle: 'next',
+      exclude: ['**/layout.tsx'],
     }),
   ],
   resolve: {

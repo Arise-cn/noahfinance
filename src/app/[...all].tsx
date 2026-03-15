@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 
-function NotFound() {
+/**
+ * 404 / Catch-all - 对应路由 *
+ */
+export default function NotFoundPage() {
   return (
     <motion.div
       className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-8"
@@ -19,5 +22,3 @@ function NotFound() {
     </motion.div>
   )
 }
-
-export default NotFound
