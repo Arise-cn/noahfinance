@@ -1,7 +1,10 @@
 import Header from '@/components/header/Header'
 import { motion } from 'framer-motion'
 
-function Home() {
+/**
+ * 首页 - 对应路由 /
+ */
+export default function HomePage() {
   return (
     <div className='min-h-screen flex flex-col'>
       <motion.div
@@ -15,5 +18,3 @@ function Home() {
     </div>
   )
 }
-
-export default Home

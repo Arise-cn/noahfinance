@@ -133,6 +133,10 @@ noahfinance/
 ├── public/                 # 静态资源，按路径引用
 │   └── favicon.svg
 ├── src/
+│   ├── app/                # App Router 风格路由（vite-plugin-pages）
+│   │   ├── layout.tsx      # 根布局，不参与 URL
+│   │   ├── index.tsx       # 首页 →
+│   │   └── [...all].tsx    # 404 / catch-all
 │   ├── assets/             # 需打包的图片/媒体
 │   ├── components/         # 可复用 UI 与布局组件
 │   │   └── ui/             # 基础 UI 组件（可选）
@@ -153,9 +157,15 @@ noahfinance/
 
 - `@/*` → `src/*`，在 `tsconfig.json` 与 `vite.config.ts` 中已配置，引用示例：`import Button from '@/components/ui/Button'`。
 
-### 7.2 功能组织
+### 7.2 App Router 风格路由
 
-- 按页面/功能可增加 `src/pages/`、`src/features/` 等；新功能优先放在对应目录下并复用 `components/` 与 `styles/tokens.css`。
+- **目录**：`src/app/`，由 `vite-plugin-pages` 生成路由（`routeStyle: 'next'`）。
+- **约定**：`layout.tsx` 为根布局（不生成路由），`index.tsx` 对应当前路径，`[id].tsx` 动态段，`[...all].tsx` 为 catch-all（如 404）。
+- **新增页面**：在 `app/` 下新建 `about/index.tsx` → `/about`，或 `blog/[id].tsx` → `/blog/:id`；需嵌套布局时在该目录下增加与目录同名的组件作为父布局。
+
+### 7.3 功能组织
+
+- 按功能可增加 `src/features/` 等；新功能优先放在对应目录下并复用 `components/` 与 `styles/tokens.css`。
 
 ---
 
@@ -171,7 +181,7 @@ noahfinance/
 ## 9. 落地清单（Figma → 代码）
 
 1. 用 **get_variable_defs** 拉取当前节点/文件的变量 → 写入 `tokens.css` 或 `tailwind.config.js`。
-2. 用 **get_design_context** 拉取目标节点 → 根据参考代码与截图在 `src/components/` 或 `src/pages/` 中实现组件/页面。
+2. 用 **get_design_context** 拉取目标节点 → 根据参考代码与截图在 `src/components/` 或 `src/app/` 中实现组件/页面。
 3. 样式以 Tailwind 类为主，颜色/间距等尽量使用已同步的 token 或 CSS 变量。
 4. 交互动效用 Framer Motion 实现，与设计稿动效描述保持一致。
 5. 资源从设计稿导出后放入 `public/` 或 `src/assets/`，并按上文规范引用。
