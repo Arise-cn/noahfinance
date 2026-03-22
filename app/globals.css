@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Inter";
+  src: url("/font/Inter/Inter-var-2.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "MiSans";
+  src: url("/font/MiSans-Heavy.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-misans: "MiSans", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+/* Header 电话胶囊：金属渐变描边（左上/右下高亮）+ 深色内底渐变，Figma 难用单条 linear-gradient 还原 */
+@layer components {
+  .header-phone-pill-frame {
+    padding: 1px;
+    border-radius: 9999px;
+    background:
+      radial-gradient(
+        ellipse 125% 210% at 0% 0%,
+        #fff2ba 0%,
+        rgba(232, 213, 135, 0.55) 18%,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse 125% 210% at 100% 100%,
+        #e8d587 0%,
+        rgba(163, 155, 119, 0.45) 22%,
+        transparent 52%
+      ),
+      conic-gradient(
+        from 215deg at 50% 50%,
+        #2a261c 0deg,
+        #4a4334 55deg,
+        #7a7158 118deg,
+        #3d362b 175deg,
+        #2c2820 232deg,
+        #6b634c 285deg,
+        #9a8f6e 320deg,
+        #2a261c 360deg
+      );
+  }
+
+  .header-phone-pill-inner {
+    background: linear-gradient(162deg, #1e1c18 0%, #0a0a09 42%, #12110f 100%);
+  }
+
+  /* Header 中部 Tab：与电话胶囊同系金属描边，略弱化以衬托选中态 */
+  .header-nav-chrome {
+    border-radius: 9999px;
+    background:
+      radial-gradient(
+        ellipse 100% 200% at 0% 0%,
+        rgba(255, 242, 186, 0.35) 0%,
+        transparent 45%
+      ),
+      radial-gradient(
+        ellipse 100% 200% at 100% 100%,
+        rgba(232, 213, 135, 0.3) 0%,
+        transparent 48%
+      ),
+      conic-gradient(
+        from 215deg at 50% 50%,
+        #25221c 0deg,
+        #3d362c 60deg,
+        #5c5444 120deg,
+        #322e26 180deg,
+        #25221c 240deg,
+        #4a4336 300deg,
+        #25221c 360deg
+      );
+  }
+
+  .header-nav-chrome-inner {
+    min-height: 100%;
+    width: 100%;
+    background: linear-gradient(168deg, #181714 0%, #080807 45%, #0f0e0c 100%);
+  }
+}

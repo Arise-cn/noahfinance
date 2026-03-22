@@ -1,52 +1,36 @@
-# Noah Finance
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-基于 Vite + React + TypeScript + Tailwind CSS + Framer Motion 的前端项目，并与 Figma 设计稿（MCP）集成。
+## Getting Started
 
-## 技术栈
-
-- **脚手架**: Vite 6
-- **语言**: React 18、TypeScript
-- **样式**: Tailwind CSS 3
-- **动画**: Framer Motion
-
-## 快速开始
+First, run the development server:
 
 ```bash
-# 安装依赖
-npm install
-
-# 开发
 npm run dev
-
-# 构建
-npm run build
-
-# 预览构建结果
-npm preview
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-## 设计系统与 Figma
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-- 设计系统与 Figma MCP 集成说明见 **[CLAUDE.md](./CLAUDE.md)**。
-- 首页 Figma 设计：[draft · node 15-1247](https://www.figma.com/design/qunfnbxyaNKXhQb2cSk6bT/draft?node-id=15-1247&t=pma58bKIuJwF64Ey-4)  
-  节点 ID 为 `15:1247`，用于 `get_design_context` / `get_variable_defs`。
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-若 Figma MCP 无法访问设计稿，请确认：
-- 当前 Figma 账号已开通 **Dev Mode**；
-- 对文件具备相应查看/编辑权限；
-- 链接与节点 ID 正确。
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## 目录结构
+## Learn More
 
-```
-src/
-├── assets/         # 图片等需打包资源
-├── components/     # 可复用组件
-├── styles/
-│   └── tokens.css # 设计 token（可对齐 Figma 变量）
-├── App.tsx
-├── main.tsx
-└── index.css
-```
+To learn more about Next.js, take a look at the following resources:
 
-路径别名：`@/*` → `src/*`。
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
