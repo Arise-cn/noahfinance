@@ -36,14 +36,13 @@ const HeaderNav = () => {
         {NAV_ITEMS.map((item) => {
           const isActive = item.href === pathname;
           console.log(isActive);
-
           return (
             <Link
               key={item.href}
               className={cn(
-                "h-[48px] flex items-center justify-center text-[#FFF2BA]  rounded-full px-[32px] bg-[#05050580] uppercase",
+                "h-[48px] flex items-center  justify-center text-[#E8D587]  rounded-full px-[32px] bg-[#05050580] uppercase",
                 "font-inter text-[20px] font-semibold tracking-[0.02em]",
-                isActive && "text-[#E8D587] bg-[#343434] font-bold",
+                isActive && "text-[#FFF2BA] bg-[#343434] font-bold",
               )}
               href={item.href}
             >
