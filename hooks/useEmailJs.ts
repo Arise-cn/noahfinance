@@ -32,7 +32,7 @@ export function useEmailJs(overrides?: UseEmailJsOverrides) {
   const base = useMemo(
     () => ({
       serviceId: overrides?.serviceId ?? EMAILJS_CONFIG.serviceId,
-      templateId: overrides?.templateId ?? EMAILJS_CONFIG.templateId,
+      templateId: overrides?.templateId ?? "",
       publicKey: overrides?.publicKey ?? EMAILJS_CONFIG.publicKey,
     }),
     [

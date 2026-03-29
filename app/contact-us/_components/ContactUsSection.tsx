@@ -1,6 +1,9 @@
 "use client";
 
-import { CONTACT_FORM_EMAILJS_PARAMS as EJ } from "@/constants/emailjs";
+import {
+  CONTACT_FORM_EMAILJS_PARAMS as EJ,
+  EMAILJS_CONTACT_TEMPLATE_ID,
+} from "@/constants/emailjs";
 import { useContactFormAntiAbuse } from "@/hooks/useContactFormAntiAbuse";
 import { useEmailJs } from "@/hooks/useEmailJs";
 import { cn } from "@/utils/cn";
@@ -63,7 +66,7 @@ const ContactUsSection = () => {
     error: sendError,
     isConfigured,
     reset: resetEmailJsState,
-  } = useEmailJs();
+  } = useEmailJs({ templateId: EMAILJS_CONTACT_TEMPLATE_ID });
   const {
     assertCanSubmit,
     recordSuccessfulSubmit,
@@ -132,10 +135,10 @@ const ContactUsSection = () => {
 
     try {
       await send({
-        [EJ.fromName]: nameTrim,
-        [EJ.replyTo]: emailTrim,
+        [EJ.name]: nameTrim,
         [EJ.phone]: phoneTrim,
-        [EJ.message]: comment.trim() || "—",
+        [EJ.email]: emailTrim,
+        [EJ.message]: comment.trim() || "N/A",
       });
 
       setName("");
