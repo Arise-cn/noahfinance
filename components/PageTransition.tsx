@@ -17,7 +17,7 @@ export default function PageTransition({ children }: PageTransitionProps) {
         className="flex min-h-0 flex-1 flex-col"
         initial={{ opacity: 0, y: 0 }}
         animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: 0 }}
+        exit={{ opacity: 1, y: 0 }}
         transition={{
           type: "spring",
           stiffness: 380,
