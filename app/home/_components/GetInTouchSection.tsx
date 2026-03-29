@@ -1,6 +1,9 @@
 "use client";
 
-import { CONTACT_FORM_EMAILJS_PARAMS as EJ } from "@/constants/emailjs";
+import {
+  EMAILJS_GET_IN_TOUCH_TEMPLATE_ID,
+  GET_IN_TOUCH_EMAILJS_PARAMS as EJ,
+} from "@/constants/emailjs";
 import { useContactFormAntiAbuse } from "@/hooks/useContactFormAntiAbuse";
 import { useEmailJs } from "@/hooks/useEmailJs";
 import { useViewport } from "@/hooks/useViewport";
@@ -126,7 +129,7 @@ const GetInTouchSection = () => {
   const { height } = useViewport();
   const baseId = useId();
   const { send, sending, error: sendError, isConfigured, reset: resetEmailJsState } =
-    useEmailJs();
+    useEmailJs({ templateId: EMAILJS_GET_IN_TOUCH_TEMPLATE_ID });
   const {
     assertCanSubmit,
     recordSuccessfulSubmit,
@@ -214,15 +217,15 @@ const GetInTouchSection = () => {
 
     try {
       await send({
-        [EJ.fromName]: nameTrim,
-        [EJ.replyTo]: emailTrim,
+        [EJ.name]: nameTrim,
         [EJ.phone]: phoneTrim,
-        [EJ.wechat]: wechat.trim() || "—",
-        [EJ.language]: language || "—",
-        [EJ.service]: service || "—",
+        [EJ.email]: emailTrim,
         [EJ.preferredDate]: preferredDate,
         [EJ.preferredTime]: preferredTime,
-        [EJ.subject]: subject.trim() || "—",
+        [EJ.wechat]: wechat.trim() || "N/A",
+        [EJ.language]: language || "N/A",
+        [EJ.service]: service || "N/A",
+        [EJ.subject]: subject.trim() || "N/A",
       });
 
       setName("");
