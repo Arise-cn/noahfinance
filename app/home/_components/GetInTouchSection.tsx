@@ -1,6 +1,7 @@
 "use client";
 
 import { CONTACT_FORM_EMAILJS_PARAMS as EJ } from "@/constants/emailjs";
+import { useContactFormAntiAbuse } from "@/hooks/useContactFormAntiAbuse";
 import { useEmailJs } from "@/hooks/useEmailJs";
 import { useViewport } from "@/hooks/useViewport";
 import { cn } from "@/utils/cn";
@@ -126,7 +127,15 @@ const GetInTouchSection = () => {
   const baseId = useId();
   const { send, sending, error: sendError, isConfigured, reset: resetEmailJsState } =
     useEmailJs();
+  const {
+    assertCanSubmit,
+    recordSuccessfulSubmit,
+    cooldownSecondsLeft,
+    isInCooldown,
+    honeypotName,
+  } = useContactFormAntiAbuse("home-get-in-touch");
 
+  const [honeypot, setHoneypot] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -185,6 +194,19 @@ const GetInTouchSection = () => {
       return;
     }
 
+    const guard = assertCanSubmit(honeypot);
+    if (!guard.ok) {
+      if ("silentBot" in guard && guard.silentBot) {
+        setSuccessMessage(
+          "Thank you. Your message has been sent and we will get back to you soon.",
+        );
+        setHoneypot("");
+      } else if ("message" in guard) {
+        setValidationError(guard.message);
+      }
+      return;
+    }
+
     const preferredTime =
       preferredHour && preferredMinute
         ? `${preferredHour.padStart(2, "0")}:${preferredMinute}`
@@ -214,6 +236,7 @@ const GetInTouchSection = () => {
       setPreferredMinute("");
       setSubject("");
       resetEmailJsState();
+      recordSuccessfulSubmit();
       setSuccessMessage(
         "Thank you. Your message has been sent and we will get back to you soon.",
       );
@@ -313,8 +336,19 @@ const GetInTouchSection = () => {
             <div className="contact-form-metal-frame overflow-hidden rounded-[36px]">
               <form
                 onSubmit={onSubmit}
-                className="contact-form-metal-inner overflow-hidden px-6 py-6 sm:px-8 sm:py-8 bg-[#0F0F0F]"
+                className="contact-form-metal-inner relative overflow-hidden px-6 py-6 sm:px-8 sm:py-8 bg-[#0F0F0F]"
               >
+                {/* Honeypot: bots often fill hidden fields; humans should leave empty */}
+                <input
+                  type="text"
+                  name={honeypotName}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                  className="pointer-events-none absolute left-0 top-0 h-px w-px overflow-hidden opacity-0"
+                  aria-hidden
+                />
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-5">
                   <div className="flex flex-col gap-4">
                     <label htmlFor={fieldId("name")}>
@@ -492,14 +526,18 @@ const GetInTouchSection = () => {
                   ) : null}
                   <button
                     type="submit"
-                    disabled={sending || !isConfigured}
+                    disabled={sending || !isConfigured || isInCooldown}
                     className={cn(
                       "h-12 w-full max-w-[480px] rounded-[24px] bg-[#2a2a2a] font-inter text-[18px] font-semibold text-[#3f3f3f] transition-colors",
                       "hover:bg-[#353535] hover:text-[#e8d587]",
                       "disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-[#2a2a2a] disabled:hover:text-[#3f3f3f]",
                     )}
                   >
-                    {sending ? "SENDING…" : "SUBMIT"}
+                    {sending
+                      ? "SENDING…"
+                      : isInCooldown
+                        ? `WAIT ${cooldownSecondsLeft}s`
+                        : "SUBMIT"}
                   </button>
                 </div>
               </form>

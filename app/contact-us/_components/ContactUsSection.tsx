@@ -1,6 +1,7 @@
 "use client";
 
 import { CONTACT_FORM_EMAILJS_PARAMS as EJ } from "@/constants/emailjs";
+import { useContactFormAntiAbuse } from "@/hooks/useContactFormAntiAbuse";
 import { useEmailJs } from "@/hooks/useEmailJs";
 import { cn } from "@/utils/cn";
 import Image from "next/image";
@@ -63,7 +64,15 @@ const ContactUsSection = () => {
     isConfigured,
     reset: resetEmailJsState,
   } = useEmailJs();
+  const {
+    assertCanSubmit,
+    recordSuccessfulSubmit,
+    cooldownSecondsLeft,
+    isInCooldown,
+    honeypotName,
+  } = useContactFormAntiAbuse("contact-us");
 
+  const [honeypot, setHoneypot] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -108,6 +117,19 @@ const ContactUsSection = () => {
       return;
     }
 
+    const guard = assertCanSubmit(honeypot);
+    if (!guard.ok) {
+      if ("silentBot" in guard && guard.silentBot) {
+        setSuccessMessage(
+          "Thank you. Your message has been sent and we will get back to you soon.",
+        );
+        setHoneypot("");
+      } else if ("message" in guard) {
+        setValidationError(guard.message);
+      }
+      return;
+    }
+
     try {
       await send({
         [EJ.fromName]: nameTrim,
@@ -121,6 +143,7 @@ const ContactUsSection = () => {
       setEmail("");
       setComment("");
       resetEmailJsState();
+      recordSuccessfulSubmit();
       setSuccessMessage(
         "Thank you. Your message has been sent and we will get back to you soon.",
       );
@@ -202,6 +225,16 @@ const ContactUsSection = () => {
                 onSubmit={onSubmit}
                 className="contact-form-metal-inner relative flex min-h-[628px] flex-col overflow-hidden px-6 py-8 sm:px-8 bg-[#0F0F0F]"
               >
+                <input
+                  type="text"
+                  name={honeypotName}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                  className="pointer-events-none absolute left-0 top-0 h-px w-px overflow-hidden opacity-0"
+                  aria-hidden
+                />
                 <div
                   className="pointer-events-none absolute left-1/2 top-[32%] hidden h-[min(360px,45%)] w-px -translate-x-1/2 lg:block"
                   aria-hidden
@@ -289,14 +322,18 @@ const ContactUsSection = () => {
                   ) : null}
                   <button
                     type="submit"
-                    disabled={sending || !isConfigured}
+                    disabled={sending || !isConfigured || isInCooldown}
                     className={cn(
                       "h-12 w-full max-w-[480px] rounded-[24px] bg-[#2a2a2a] font-inter text-[18px] font-semibold text-[#3f3f3f] transition-colors",
                       "hover:bg-[#353535] hover:text-[#e8d587]",
                       "disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-[#2a2a2a] disabled:hover:text-[#3f3f3f]",
                     )}
                   >
-                    {sending ? "SENDING…" : "SUBMIT"}
+                    {sending
+                      ? "SENDING…"
+                      : isInCooldown
+                        ? `WAIT ${cooldownSecondsLeft}s`
+                        : "SUBMIT"}
                   </button>
                 </div>
               </form>
