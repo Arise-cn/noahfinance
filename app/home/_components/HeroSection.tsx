@@ -1,8 +1,16 @@
 import { cn } from "@/utils/cn";
 
+const publicAsset = (path: string) =>
+  `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${path}`;
+
 const HeroSection = () => {
   return (
-    <div className="w-full h-screen bg-[url('/images/pg1_bg.webp')] bg-cover bg-center bg-no-repeat">
+    <div
+      className="w-full h-screen bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage: `url(${publicAsset("/images/pg1_bg.webp")})`,
+      }}
+    >
       <div className="w-full h-screen bg-[#0000007A] flex items-center">
         <div className="flex flex-col items-center justify-center w-full">
           <p className="font-misans text-[52px] text-white text-center w-full">
