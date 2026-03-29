@@ -115,7 +115,8 @@ function LoansHeaderNavItem({
       )}
       position="bottom center"
       offsetY={10}
-      on="click"
+      on={["click", "hover"]}
+      mouseLeaveDelay={250}
       arrow={false}
       closeOnDocumentClick
       closeOnEscape
