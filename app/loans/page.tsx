@@ -1,5 +1,5 @@
-const LoansPage = () => {
-  return <div>LoansPage</div>;
-};
+import { redirect } from "next/navigation";
 
-export default LoansPage;
+export default function LoansIndexPage() {
+  redirect("/loans/residential");
+}
