@@ -1,0 +1,31 @@
+import { cn } from "@/utils/cn";
+
+const HeroSection = () => {
+  return (
+    <div className="w-full h-screen bg-[url('/images/pg1_bg.webp')] bg-cover bg-center bg-no-repeat">
+      <div className="w-full h-screen bg-[#0000007A] flex items-center">
+        <div className="flex flex-col items-center justify-center w-full">
+          <p className="font-misans text-[52px] text-white text-center w-full">
+            TAILORED WITH A PERSONAL TOUCH TO
+            <br />
+            MEET YOUR LENDING NEEDS.
+          </p>
+          <div className="header-phone-pill-frame flex h-[64px] justify-self-end overflow-hidden mt-[48px]">
+            <div className="header-phone-pill-inner flex h-full w-full items-center justify-center rounded-full">
+              <p
+                className={cn(
+                  "bg-linear-to-r from-[#E8D587] via-[#FFF5C9] to-[#E8D587] bg-clip-text text-transparent uppercase px-[72px]",
+                  "font-inter text-[28px] font-semibold",
+                )}
+              >
+                GOT IN TOUCH
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default HeroSection;
