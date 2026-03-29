@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 
 const Header = () => {
   return (
-    <header className="fixed top-[36px] z-10 grid w-full grid-cols-[1fr_auto_1fr] items-center gap-8 px-[136px]">
+    <header className="fixed top-[36px] grid w-full grid-cols-[1fr_auto_1fr] items-center gap-8 px-[136px] z-50">
       <img
         src="/images/Logo.png"
         className="h-[48px] w-[184px] justify-self-start"
@@ -59,9 +59,7 @@ const HeaderNav = () => {
               <span
                 className={cn(
                   "relative z-10",
-                  isActive
-                    ? "font-bold text-[#FFF2BA]"
-                    : "text-[#E8D587]",
+                  isActive ? "font-bold text-[#FFF2BA]" : "text-[#E8D587]",
                 )}
               >
                 {item.name}
