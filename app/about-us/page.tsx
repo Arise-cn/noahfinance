@@ -1,5 +1,7 @@
+import AboutTeamSection from "./_components/AboutTeamSection";
+
 const AboutUsPage = () => {
-  return <div>AboutUsPage</div>;
+  return <AboutTeamSection />;
 };
 
 export default AboutUsPage;
