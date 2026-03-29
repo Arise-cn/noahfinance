@@ -26,7 +26,7 @@ function ChevronDownIcon({ className }: { className?: string }) {
   );
 }
 
-const LANGUAGE_OPTIONS = ["English", "中文", "Other"] as const;
+const LANGUAGE_OPTIONS = ["English", "Chinese", "Other"] as const;
 const SERVICE_OPTIONS = [
   "Residential loan",
   "Commercial loan",
@@ -154,33 +154,33 @@ const GetInTouchSection = () => {
     const emailTrim = email.trim();
 
     if (!nameTrim) {
-      setValidationError("请填写姓名。");
+      setValidationError("Please enter your name.");
       return;
     }
     if (!phoneTrim) {
-      setValidationError("请填写电话。");
+      setValidationError("Please enter your phone number.");
       return;
     }
     if (!emailTrim) {
-      setValidationError("请填写邮箱。");
+      setValidationError("Please enter your email.");
       return;
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailTrim)) {
-      setValidationError("请填写有效的邮箱地址。");
+      setValidationError("Please enter a valid email address.");
       return;
     }
     if (!preferredDate) {
-      setValidationError("请选择首选日期。");
+      setValidationError("Please select a preferred date.");
       return;
     }
     if (!preferredHour || !preferredMinute) {
-      setValidationError("请选择首选时间（小时与分钟）。");
+      setValidationError("Please select a preferred time (hour and minute).");
       return;
     }
 
     if (!isConfigured) {
       setValidationError(
-        "邮件服务未配置，请直接致电或通过页面上的邮箱联系我们。",
+        "Email service is not configured. Please call us or use the email address on this page.",
       );
       return;
     }
@@ -214,9 +214,11 @@ const GetInTouchSection = () => {
       setPreferredMinute("");
       setSubject("");
       resetEmailJsState();
-      setSuccessMessage("提交成功，我们会尽快与您联系。");
+      setSuccessMessage(
+        "Thank you. Your message has been sent and we will get back to you soon.",
+      );
     } catch {
-      // 错误已由 useEmailJs 写入 sendError
+      // sendError is set by useEmailJs
     }
   };
 
@@ -236,7 +238,7 @@ const GetInTouchSection = () => {
         </h2>
 
         <div className="mt-10 flex flex-col gap-12 lg:mt-14 lg:flex-row lg:items-start lg:gap-10 xl:gap-16">
-          {/* 左栏：地图 + 联系信息 + 营业时间 */}
+          {/* Left: map, contact info, hours */}
           <div className="flex w-full min-w-0 flex-1 flex-col gap-10 lg:max-w-[640px]">
             <div className="relative h-[220px] w-full max-w-[520px] overflow-hidden rounded-[20px] sm:h-[280px] lg:h-[336px]">
               <Image
@@ -306,7 +308,7 @@ const GetInTouchSection = () => {
             </div>
           </div>
 
-          {/* 右栏：表单（金属渐变描边 + 玻璃内底，同 Header 电话胶囊逻辑） */}
+          {/* Right: form (metal frame + inner glass, same as Header phone pill) */}
           <div className="w-full shrink-0 lg:w-[600px]">
             <div className="contact-form-metal-frame overflow-hidden rounded-[36px]">
               <form
@@ -470,7 +472,9 @@ const GetInTouchSection = () => {
                 <div className="mt-8 flex flex-col items-center gap-3 sm:mt-10">
                   {!isConfigured ? (
                     <p className="max-w-[480px] text-center font-inter text-[14px] leading-normal text-[#767676]">
-                      联系表单邮件服务未配置时无法在线提交，请致电或通过左侧邮箱联系我们。
+                      Online submission is unavailable while email is not
+                      configured. Please call us or use the email address on
+                      the left.
                     </p>
                   ) : null}
                   {(validationError || (!successMessage && sendError)) ? (

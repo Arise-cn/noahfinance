@@ -23,6 +23,7 @@ export const CONTACT_FORM_EMAILJS_PARAMS = {
   fromName: "from_name",
   replyTo: "reply_to",
   phone: "phone",
+  message: "message",
   wechat: "wechat",
   language: "language",
   service: "service",

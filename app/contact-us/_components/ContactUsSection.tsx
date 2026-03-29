@@ -1,5 +1,7 @@
 "use client";
 
+import { CONTACT_FORM_EMAILJS_PARAMS as EJ } from "@/constants/emailjs";
+import { useEmailJs } from "@/hooks/useEmailJs";
 import { cn } from "@/utils/cn";
 import Image from "next/image";
 import { type FormEvent, type ReactNode, useId, useState } from "react";
@@ -54,15 +56,77 @@ function TextInput({
 
 const ContactUsSection = () => {
   const baseId = useId();
+  const {
+    send,
+    sending,
+    error: sendError,
+    isConfigured,
+    reset: resetEmailJsState,
+  } = useEmailJs();
+
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [comment, setComment] = useState("");
 
+  const [validationError, setValidationError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
   const fieldId = (key: string) => `${baseId}-${key}`;
 
-  const onSubmit = (e: FormEvent) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setValidationError(null);
+    setSuccessMessage(null);
+    resetEmailJsState();
+
+    const nameTrim = name.trim();
+    const phoneTrim = phone.trim();
+    const emailTrim = email.trim();
+
+    if (!nameTrim) {
+      setValidationError("Please enter your name.");
+      return;
+    }
+    if (!phoneTrim) {
+      setValidationError("Please enter your phone number.");
+      return;
+    }
+    if (!emailTrim) {
+      setValidationError("Please enter your email.");
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailTrim)) {
+      setValidationError("Please enter a valid email address.");
+      return;
+    }
+
+    if (!isConfigured) {
+      setValidationError(
+        "Email service is not configured. Please call us or use the email address on this page.",
+      );
+      return;
+    }
+
+    try {
+      await send({
+        [EJ.fromName]: nameTrim,
+        [EJ.replyTo]: emailTrim,
+        [EJ.phone]: phoneTrim,
+        [EJ.message]: comment.trim() || "—",
+      });
+
+      setName("");
+      setPhone("");
+      setEmail("");
+      setComment("");
+      resetEmailJsState();
+      setSuccessMessage(
+        "Thank you. Your message has been sent and we will get back to you soon.",
+      );
+    } catch {
+      // sendError is set by useEmailJs
+    }
   };
 
   return (
@@ -202,12 +266,37 @@ const ContactUsSection = () => {
                   </div>
                 </div>
 
-                <div className="relative z-10 mt-auto flex justify-center pt-10">
+                <div className="relative z-10 mt-auto flex flex-col items-center gap-3 pt-10">
+                  {!isConfigured ? (
+                    <p className="max-w-[480px] text-center font-inter text-[14px] leading-normal text-[#767676]">
+                      Online submission is unavailable while email is not
+                      configured. Please call us or use the email address on
+                      the left.
+                    </p>
+                  ) : null}
+                  {validationError || (!successMessage && sendError) ? (
+                    <p
+                      className="max-w-[480px] text-center font-inter text-[14px] text-[#f87171]"
+                      role="alert"
+                    >
+                      {validationError ?? sendError?.message}
+                    </p>
+                  ) : null}
+                  {successMessage ? (
+                    <p className="max-w-[480px] text-center font-inter text-[14px] text-[#a3d9a5]">
+                      {successMessage}
+                    </p>
+                  ) : null}
                   <button
                     type="submit"
-                    className="h-12 w-full max-w-[480px] rounded-[24px] bg-[#2a2a2a] font-inter text-[18px] font-semibold text-[#3f3f3f] transition-colors hover:bg-[#353535] hover:text-[#e8d587]"
+                    disabled={sending || !isConfigured}
+                    className={cn(
+                      "h-12 w-full max-w-[480px] rounded-[24px] bg-[#2a2a2a] font-inter text-[18px] font-semibold text-[#3f3f3f] transition-colors",
+                      "hover:bg-[#353535] hover:text-[#e8d587]",
+                      "disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-[#2a2a2a] disabled:hover:text-[#3f3f3f]",
+                    )}
                   >
-                    SUBMIT
+                    {sending ? "SENDING…" : "SUBMIT"}
                   </button>
                 </div>
               </form>
