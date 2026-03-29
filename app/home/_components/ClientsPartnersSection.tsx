@@ -90,11 +90,11 @@ const ClientsPartnersSection = () => {
   }, [activeIndex]);
 
   return (
-    <section className="w-screen overflow-hiddenflex flex-col">
+    <section className="relative z-10 w-screen flex flex-col overflow-hidden bg-[#0F0F0F]">
       <div
         className={cn(
           "mx-auto w-full max-w-[1920px]",
-          "px-8 py-16 pb-16 md:px-[136px] md:pb-20 xl:px-[136px] bg-[#0F0F0F]",
+          "px-8 py-16 pb-16 md:px-[136px] md:pb-20 xl:px-[136px]",
         )}
       >
         <h2 className="text-center font-misans text-[32px] font-black leading-normal text-white">
