@@ -1,5 +1,5 @@
 import AboutSection from "./_components/AboutSection";
-import ClientsPartnersFooterSection from "./_components/ClientsPartnersFooterSection";
+import ClientsPartnersSection from "./_components/ClientsPartnersSection";
 import HeroSection from "./_components/HeroSection";
 import GetInTouchSection from "./_components/GetInTouchSection";
 import LendingSolutionsSection from "./_components/LendingSolutionsSection";
@@ -13,7 +13,7 @@ const HomePage = () => {
       <WhatWeDoSection />
       <LendingSolutionsSection />
       <GetInTouchSection />
-      <ClientsPartnersFooterSection />
+      <ClientsPartnersSection />
     </div>
   );
 };
