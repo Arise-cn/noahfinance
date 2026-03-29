@@ -28,6 +28,53 @@ const SERVICES = [
 ] as const;
 
 type ServiceId = (typeof SERVICES)[number]["id"];
+type ServiceItem = (typeof SERVICES)[number];
+
+function ServiceRowButton({
+  service,
+  isOpen,
+  onSelect,
+  figmaPadding = false,
+}: {
+  service: ServiceItem;
+  isOpen: boolean;
+  onSelect: () => void;
+  figmaPadding?: boolean;
+}) {
+  return (
+    <button
+      type="button"
+      aria-expanded={isOpen}
+      className={cn(
+        "flex w-full text-left transition-colors hover:bg-white/3",
+        isOpen
+          ? cn(
+              "flex-col gap-8 sm:flex-row sm:items-center sm:gap-12",
+              figmaPadding
+                ? "px-[48px] py-[34px]"
+                : "px-8 py-[34px]",
+            )
+          : "h-full items-center px-12",
+      )}
+      onClick={onSelect}
+    >
+      <span className="shrink-0 font-inter text-[28px] font-semibold leading-normal text-[#fff2ba]">
+        {service.title}
+      </span>
+      {isOpen ? (
+        <>
+          <span
+            className="hidden h-[136px] w-px shrink-0 bg-[#e8d587]/70 sm:block"
+            aria-hidden
+          />
+          <p className="max-w-[800px] font-inter text-[18px] font-light leading-[32px] text-white">
+            {service.body}
+          </p>
+        </>
+      ) : null}
+    </button>
+  );
+}
 
 const WhatWeDoSection = () => {
   const { height } = useViewport();
@@ -67,6 +114,9 @@ const WhatWeDoSection = () => {
           <ul className="mt-[48px] flex w-full max-w-[1336px] flex-col gap-6">
             {SERVICES.map((service) => {
               const isOpen = openId === service.id;
+              const isMetalExpanded =
+                isOpen && service.id === "residential";
+
               return (
                 <li key={service.id}>
                   <motion.div
@@ -77,38 +127,33 @@ const WhatWeDoSection = () => {
                       damping: 34,
                     }}
                     className={cn(
-                      "w-full overflow-hidden rounded-[24px] backdrop-blur-[19.4px]",
-                      "bg-[rgba(15,15,15,0.3)]",
-                      isOpen && "border border-solid border-[#e8d587]",
+                      "w-full overflow-hidden rounded-[24px]",
+                      !isMetalExpanded &&
+                        "backdrop-blur-[19.4px] bg-[rgba(15,15,15,0.3)]",
+                      isOpen &&
+                        !isMetalExpanded &&
+                        "border border-solid border-[#e8d587]",
                       !isOpen && "h-[96px]",
                     )}
                   >
-                    <button
-                      type="button"
-                      aria-expanded={isOpen}
-                      className={cn(
-                        "flex w-full text-left transition-colors hover:bg-white/3",
-                        isOpen
-                          ? "flex-col gap-8 px-8 py-[34px] sm:flex-row sm:items-center sm:gap-12"
-                          : "h-full items-center px-12",
-                      )}
-                      onClick={() => setOpenId(service.id)}
-                    >
-                      <span className="shrink-0 font-inter text-[28px] font-semibold leading-normal text-[#fff2ba]">
-                        {service.title}
-                      </span>
-                      {isOpen ? (
-                        <>
-                          <span
-                            className="hidden h-[136px] w-px shrink-0 bg-[#e8d587]/70 sm:block"
-                            aria-hidden
+                    {isMetalExpanded ? (
+                      <div className="home-service-expanded-frame">
+                        <div className="home-service-expanded-inner overflow-hidden">
+                          <ServiceRowButton
+                            service={service}
+                            isOpen={isOpen}
+                            onSelect={() => setOpenId(service.id)}
+                            figmaPadding
                           />
-                          <p className="max-w-[800px] font-inter text-[18px] font-light leading-[32px] text-white">
-                            {service.body}
-                          </p>
-                        </>
-                      ) : null}
-                    </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <ServiceRowButton
+                        service={service}
+                        isOpen={isOpen}
+                        onSelect={() => setOpenId(service.id)}
+                      />
+                    )}
                   </motion.div>
                 </li>
               );
