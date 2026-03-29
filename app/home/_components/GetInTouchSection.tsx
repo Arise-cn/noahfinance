@@ -9,7 +9,15 @@ import { useEmailJs } from "@/hooks/useEmailJs";
 import { useViewport } from "@/hooks/useViewport";
 import { cn } from "@/utils/cn";
 import Image from "next/image";
-import { type FormEvent, type ReactNode, useId, useState } from "react";
+import {
+  type FormEvent,
+  type ReactNode,
+  useId,
+  useMemo,
+  useState,
+} from "react";
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function ChevronDownIcon({ className }: { className?: string }) {
   return (
@@ -155,6 +163,29 @@ const GetInTouchSection = () => {
 
   const fieldId = (key: string) => `${baseId}-${key}`;
 
+  const isRequiredComplete = useMemo(() => {
+    const emailTrim = email.trim();
+    return (
+      name.trim() !== "" &&
+      phone.trim() !== "" &&
+      emailTrim !== "" &&
+      EMAIL_RE.test(emailTrim) &&
+      preferredDate !== "" &&
+      preferredHour !== "" &&
+      preferredMinute !== ""
+    );
+  }, [
+    name,
+    phone,
+    email,
+    preferredDate,
+    preferredHour,
+    preferredMinute,
+  ]);
+
+  const submitHighlighted =
+    isRequiredComplete && isConfigured && !isInCooldown && !sending;
+
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setValidationError(null);
@@ -177,7 +208,7 @@ const GetInTouchSection = () => {
       setValidationError("Please enter your email.");
       return;
     }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailTrim)) {
+    if (!EMAIL_RE.test(emailTrim)) {
       setValidationError("Please enter a valid email address.");
       return;
     }
@@ -531,9 +562,15 @@ const GetInTouchSection = () => {
                     type="submit"
                     disabled={sending || !isConfigured || isInCooldown}
                     className={cn(
-                      "h-12 w-full max-w-[480px] rounded-[24px] bg-[#2a2a2a] font-inter text-[18px] font-semibold text-[#3f3f3f] transition-colors",
-                      "hover:bg-[#353535] hover:text-[#e8d587]",
-                      "disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-[#2a2a2a] disabled:hover:text-[#3f3f3f]",
+                      "h-12 w-full max-w-[480px] rounded-[24px] font-inter text-[18px] font-semibold transition-colors",
+                      submitHighlighted
+                        ? "bg-[#e8d587] text-[#1a1a1a] shadow-[0_0_28px_rgba(232,213,135,0.28)] hover:bg-[#f0e4a8]"
+                        : "bg-[#2a2a2a] text-[#3f3f3f] hover:bg-[#353535] hover:text-[#e8d587]",
+                      "disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none",
+                      !submitHighlighted &&
+                        "disabled:hover:bg-[#2a2a2a] disabled:hover:text-[#3f3f3f]",
+                      submitHighlighted &&
+                        "disabled:hover:bg-[#e8d587] disabled:hover:text-[#1a1a1a]",
                     )}
                   >
                     {sending
