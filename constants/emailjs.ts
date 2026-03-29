@@ -17,3 +17,16 @@ export function isEmailJsConfigured(): boolean {
       EMAILJS_CONFIG.publicKey,
   );
 }
+
+/** 联系表单发往 EmailJS 的模板变量名，需在后台模板中使用同名占位符，如 {{from_name}} */
+export const CONTACT_FORM_EMAILJS_PARAMS = {
+  fromName: "from_name",
+  replyTo: "reply_to",
+  phone: "phone",
+  wechat: "wechat",
+  language: "language",
+  service: "service",
+  preferredDate: "preferred_date",
+  preferredTime: "preferred_time",
+  subject: "subject",
+} as const;

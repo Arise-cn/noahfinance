@@ -1,5 +1,7 @@
 "use client";
 
+import { CONTACT_FORM_EMAILJS_PARAMS as EJ } from "@/constants/emailjs";
+import { useEmailJs } from "@/hooks/useEmailJs";
 import { useViewport } from "@/hooks/useViewport";
 import { cn } from "@/utils/cn";
 import Image from "next/image";
@@ -122,6 +124,8 @@ function SelectInput({
 const GetInTouchSection = () => {
   const { height } = useViewport();
   const baseId = useId();
+  const { send, sending, error: sendError, isConfigured, reset: resetEmailJsState } =
+    useEmailJs();
 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -134,10 +138,86 @@ const GetInTouchSection = () => {
   const [preferredMinute, setPreferredMinute] = useState("");
   const [subject, setSubject] = useState("");
 
+  const [validationError, setValidationError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
   const fieldId = (key: string) => `${baseId}-${key}`;
 
-  const onSubmit = (e: FormEvent) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setValidationError(null);
+    setSuccessMessage(null);
+    resetEmailJsState();
+
+    const nameTrim = name.trim();
+    const phoneTrim = phone.trim();
+    const emailTrim = email.trim();
+
+    if (!nameTrim) {
+      setValidationError("请填写姓名。");
+      return;
+    }
+    if (!phoneTrim) {
+      setValidationError("请填写电话。");
+      return;
+    }
+    if (!emailTrim) {
+      setValidationError("请填写邮箱。");
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailTrim)) {
+      setValidationError("请填写有效的邮箱地址。");
+      return;
+    }
+    if (!preferredDate) {
+      setValidationError("请选择首选日期。");
+      return;
+    }
+    if (!preferredHour || !preferredMinute) {
+      setValidationError("请选择首选时间（小时与分钟）。");
+      return;
+    }
+
+    if (!isConfigured) {
+      setValidationError(
+        "邮件服务未配置，请直接致电或通过页面上的邮箱联系我们。",
+      );
+      return;
+    }
+
+    const preferredTime =
+      preferredHour && preferredMinute
+        ? `${preferredHour.padStart(2, "0")}:${preferredMinute}`
+        : "";
+
+    try {
+      await send({
+        [EJ.fromName]: nameTrim,
+        [EJ.replyTo]: emailTrim,
+        [EJ.phone]: phoneTrim,
+        [EJ.wechat]: wechat.trim() || "—",
+        [EJ.language]: language || "—",
+        [EJ.service]: service || "—",
+        [EJ.preferredDate]: preferredDate,
+        [EJ.preferredTime]: preferredTime,
+        [EJ.subject]: subject.trim() || "—",
+      });
+
+      setName("");
+      setPhone("");
+      setEmail("");
+      setWechat("");
+      setLanguage("");
+      setService("");
+      setPreferredDate("");
+      setPreferredHour("");
+      setPreferredMinute("");
+      setSubject("");
+      resetEmailJsState();
+      setSuccessMessage("提交成功，我们会尽快与您联系。");
+    } catch {
+      // 错误已由 useEmailJs 写入 sendError
+    }
   };
 
   return (
@@ -387,12 +467,35 @@ const GetInTouchSection = () => {
                   </div>
                 </div>
 
-                <div className="mt-8 flex justify-center sm:mt-10">
+                <div className="mt-8 flex flex-col items-center gap-3 sm:mt-10">
+                  {!isConfigured ? (
+                    <p className="max-w-[480px] text-center font-inter text-[14px] leading-normal text-[#767676]">
+                      联系表单邮件服务未配置时无法在线提交，请致电或通过左侧邮箱联系我们。
+                    </p>
+                  ) : null}
+                  {(validationError || (!successMessage && sendError)) ? (
+                    <p
+                      className="max-w-[480px] text-center font-inter text-[14px] text-[#f87171]"
+                      role="alert"
+                    >
+                      {validationError ?? sendError?.message}
+                    </p>
+                  ) : null}
+                  {successMessage ? (
+                    <p className="max-w-[480px] text-center font-inter text-[14px] text-[#a3d9a5]">
+                      {successMessage}
+                    </p>
+                  ) : null}
                   <button
                     type="submit"
-                    className="h-12 w-full max-w-[480px] rounded-[24px] bg-[#2a2a2a] font-inter text-[18px] font-semibold text-[#3f3f3f] transition-colors hover:bg-[#353535] hover:text-[#e8d587]"
+                    disabled={sending || !isConfigured}
+                    className={cn(
+                      "h-12 w-full max-w-[480px] rounded-[24px] bg-[#2a2a2a] font-inter text-[18px] font-semibold text-[#3f3f3f] transition-colors",
+                      "hover:bg-[#353535] hover:text-[#e8d587]",
+                      "disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-[#2a2a2a] disabled:hover:text-[#3f3f3f]",
+                    )}
                   >
-                    SUBMIT
+                    {sending ? "SENDING…" : "SUBMIT"}
                   </button>
                 </div>
               </form>
