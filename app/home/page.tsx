@@ -4,8 +4,11 @@ import HeroSection from "./_components/HeroSection";
 import GetInTouchSection from "./_components/GetInTouchSection";
 import LendingSolutionsSection from "./_components/LendingSolutionsSection";
 import WhatWeDoSection from "./_components/WhatWeDoSection";
+import { getPartnerImageSrcs } from "./_lib/getPartnerImageSrcs";
 
-const HomePage = () => {
+const HomePage = async () => {
+  const partnerImageSrcs = await getPartnerImageSrcs();
+
   return (
     <div className="w-screen flex flex-col">
       <div className="sticky top-0 z-0 h-svh min-h-dvh w-screen shrink-0">
@@ -15,7 +18,7 @@ const HomePage = () => {
       <WhatWeDoSection />
       <LendingSolutionsSection />
       <GetInTouchSection />
-      <ClientsPartnersSection />
+      <ClientsPartnersSection partnerImageSrcs={partnerImageSrcs} />
     </div>
   );
 };

@@ -2,7 +2,7 @@
 
 import { cn } from "@/utils/cn";
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { type PointerEvent, useEffect, useMemo, useRef, useState } from "react";
 
 const TESTIMONIALS = [
   {
@@ -35,15 +35,6 @@ const TESTIMONIALS = [
     quote:
       "I received wonderful service from Noah Finance. We were offered professional, balanced and unbiased advice on my questions in applying for the loan. I highly recommend the service for your loan application.",
   },
-] as const;
-
-const LENDER_IMAGES = [
-  "/images/home_p6_lender_1.webp",
-  "/images/home_p6_lender_2.webp",
-  "/images/home_p6_lender_3.webp",
-  "/images/home_p6_lender_4.webp",
-  "/images/home_p6_lender_5.webp",
-  "/images/home_p6_lender_6.webp",
 ] as const;
 
 function VerticalName({
@@ -81,7 +72,163 @@ function StarRow() {
   );
 }
 
-const ClientsPartnersSection = () => {
+function PartnerTrack({ images }: { images: readonly string[] }) {
+  const loopImages = [...images, ...images];
+  const containerRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number | null>(null);
+  const lastTsRef = useRef<number | null>(null);
+  const offsetRef = useRef(0);
+  const halfWidthRef = useRef(0);
+  const hoverRef = useRef(false);
+  const draggingRef = useRef(false);
+  const dragStartXRef = useRef(0);
+  const dragStartOffsetRef = useRef(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+
+  const normalizeOffset = (rawOffset: number) => {
+    const halfWidth = halfWidthRef.current;
+    if (halfWidth <= 0) return rawOffset;
+    let normalized = rawOffset % halfWidth;
+    if (normalized > 0) normalized -= halfWidth;
+    return normalized;
+  };
+
+  const applyTransform = (offset: number) => {
+    if (!trackRef.current) return;
+    trackRef.current.style.transform = `translate3d(${offset}px, 0, 0)`;
+  };
+
+  useEffect(() => {
+    if (!trackRef.current) return;
+
+    const measure = () => {
+      if (!trackRef.current) return;
+      halfWidthRef.current = trackRef.current.scrollWidth / 2;
+      offsetRef.current = normalizeOffset(offsetRef.current);
+      applyTransform(offsetRef.current);
+    };
+
+    measure();
+
+    const observer = new ResizeObserver(measure);
+    observer.observe(trackRef.current);
+    return () => observer.disconnect();
+  }, [loopImages.length]);
+
+  useEffect(() => {
+    const speedPxPerSecond = 56;
+
+    const tick = (ts: number) => {
+      if (lastTsRef.current == null) {
+        lastTsRef.current = ts;
+      }
+      const deltaMs = ts - lastTsRef.current;
+      lastTsRef.current = ts;
+
+      if (!isPaused && !draggingRef.current) {
+        offsetRef.current = normalizeOffset(
+          offsetRef.current - (speedPxPerSecond * deltaMs) / 1000,
+        );
+        applyTransform(offsetRef.current);
+      }
+
+      rafRef.current = window.requestAnimationFrame(tick);
+    };
+
+    rafRef.current = window.requestAnimationFrame(tick);
+    return () => {
+      if (rafRef.current != null) {
+        window.cancelAnimationFrame(rafRef.current);
+      }
+      rafRef.current = null;
+      lastTsRef.current = null;
+    };
+  }, [isPaused]);
+
+  const onPointerEnter = () => {
+    hoverRef.current = true;
+    setIsPaused(true);
+  };
+
+  const onPointerLeave = () => {
+    hoverRef.current = false;
+    if (!draggingRef.current) {
+      setIsPaused(false);
+    }
+  };
+
+  const onPointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    if (!containerRef.current) return;
+    containerRef.current.setPointerCapture(event.pointerId);
+    draggingRef.current = true;
+    setIsDragging(true);
+    dragStartXRef.current = event.clientX;
+    dragStartOffsetRef.current = offsetRef.current;
+    setIsPaused(true);
+  };
+
+  const onPointerMove = (event: PointerEvent<HTMLDivElement>) => {
+    if (!draggingRef.current) return;
+    const deltaX = event.clientX - dragStartXRef.current;
+    offsetRef.current = normalizeOffset(dragStartOffsetRef.current + deltaX);
+    applyTransform(offsetRef.current);
+  };
+
+  const onPointerEnd = (event: PointerEvent<HTMLDivElement>) => {
+    if (
+      containerRef.current &&
+      containerRef.current.hasPointerCapture(event.pointerId)
+    ) {
+      containerRef.current.releasePointerCapture(event.pointerId);
+    }
+    draggingRef.current = false;
+    setIsDragging(false);
+    setIsPaused(hoverRef.current);
+  };
+
+  return (
+    <div
+      ref={containerRef}
+      className={cn(
+        "relative overflow-hidden select-none touch-pan-y",
+        isDragging ? "cursor-grabbing" : "cursor-grab",
+      )}
+      onPointerEnter={onPointerEnter}
+      onPointerLeave={onPointerLeave}
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={onPointerEnd}
+      onPointerCancel={onPointerEnd}
+    >
+      <div ref={trackRef} className="flex w-max will-change-transform">
+        {loopImages.map((src, i) => (
+          <div
+            key={`${src}-${i}`}
+            className="mr-6 flex h-[140px] w-[250px] shrink-0 items-center justify-center rounded-[12px] bg-white px-4 sm:h-[150px] sm:w-[280px] md:h-[160px] md:w-[320px]"
+          >
+            <Image
+              src={src}
+              alt={`Partner lender ${(i % images.length) + 1}`}
+              width={300}
+              height={100}
+              className="max-h-[91px] w-auto max-w-full object-contain"
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+type ClientsPartnersSectionProps = {
+  partnerImageSrcs: string[];
+};
+
+const ClientsPartnersSection = ({
+  partnerImageSrcs,
+}: ClientsPartnersSectionProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const ordered = useMemo(() => {
@@ -171,22 +318,11 @@ const ClientsPartnersSection = () => {
           that you need
         </p>
 
-        <div className="mt-10 flex gap-6 overflow-x-auto pb-2 lg:mt-12 lg:justify-center lg:overflow-visible lg:pb-0">
-          {LENDER_IMAGES.map((src, i) => (
-            <div
-              key={src}
-              className="flex h-[160px] w-[280px] shrink-0 items-center justify-center rounded-[12px] bg-white px-4 sm:w-[300px] md:w-[320px]"
-            >
-              <Image
-                src={src}
-                alt={`Lender ${i + 1}`}
-                width={300}
-                height={100}
-                className="max-h-[91px] w-auto max-w-full object-contain"
-              />
-            </div>
-          ))}
-        </div>
+        {partnerImageSrcs.length > 0 ? (
+          <div className="mt-10 lg:mt-12">
+            <PartnerTrack images={partnerImageSrcs} />
+          </div>
+        ) : null}
       </div>
     </section>
   );
