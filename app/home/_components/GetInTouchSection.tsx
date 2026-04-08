@@ -136,8 +136,13 @@ function SelectInput({
 const GetInTouchSection = () => {
   const { height } = useViewport();
   const baseId = useId();
-  const { send, sending, error: sendError, isConfigured, reset: resetEmailJsState } =
-    useEmailJs({ templateId: EMAILJS_GET_IN_TOUCH_TEMPLATE_ID });
+  const {
+    send,
+    sending,
+    error: sendError,
+    isConfigured,
+    reset: resetEmailJsState,
+  } = useEmailJs({ templateId: EMAILJS_GET_IN_TOUCH_TEMPLATE_ID });
   const {
     assertCanSubmit,
     recordSuccessfulSubmit,
@@ -174,14 +179,7 @@ const GetInTouchSection = () => {
       preferredHour !== "" &&
       preferredMinute !== ""
     );
-  }, [
-    name,
-    phone,
-    email,
-    preferredDate,
-    preferredHour,
-    preferredMinute,
-  ]);
+  }, [name, phone, email, preferredDate, preferredHour, preferredMinute]);
 
   const submitHighlighted =
     isRequiredComplete && isConfigured && !isInCooldown && !sending;
@@ -290,24 +288,9 @@ const GetInTouchSection = () => {
           "px-8 py-16 md:px-[136px] xl:pl-[292px] xl:pr-[136px]",
         )}
       >
-        <h2 className="font-misans text-[32px] font-black leading-normal text-white lg:pl-[62px]">
-          GET IN TOUCH WITH US TODAY
-        </h2>
-
-        <div className="mt-10 flex flex-col gap-12 lg:mt-14 lg:flex-row lg:items-start lg:gap-10 xl:gap-16">
-          {/* Left: map, contact info, hours */}
-          <div className="flex w-full min-w-0 flex-1 flex-col gap-10 lg:max-w-[640px]">
-            <div className="relative h-[220px] w-full max-w-[520px] overflow-hidden rounded-[20px] sm:h-[280px] lg:h-[336px]">
-              <Image
-                src="/images/home_p5_map.webp"
-                alt="Office location"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 520px"
-                priority={false}
-              />
-            </div>
-
+        <div className="mt-10 flex flex-row gap-[200px] items-center">
+          {/* Left: contact info, map, hours */}
+          <div className="flex w-full min-w-0 flex-1 flex-col gap-8 lg:max-w-[560px]">
             <div className="flex flex-col gap-6">
               <p className="font-inter text-[18px] font-semibold text-[#fff2ba]">
                 CONTACT INFO
@@ -340,6 +323,17 @@ const GetInTouchSection = () => {
               </div>
             </div>
 
+            <div className="relative h-[220px] w-full max-w-[520px] overflow-hidden rounded-[20px] sm:h-[280px] lg:h-[336px]">
+              <Image
+                src="/images/home_p5_map.webp"
+                alt="Office location"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 520px"
+                priority={false}
+              />
+            </div>
+
             <div className="flex flex-col gap-6">
               <p className="font-inter text-[20px] font-semibold text-[#fff2ba]">
                 WORKING HOURS
@@ -365,12 +359,15 @@ const GetInTouchSection = () => {
             </div>
           </div>
 
-          {/* Right: form (metal frame + inner glass, same as Header phone pill) */}
+          {/* Right: title + form */}
           <div className="w-full shrink-0 lg:w-[600px]">
+            <h2 className="mb-6 font-misans text-[32px] font-black leading-normal text-white">
+              GET IN TOUCH WITH US TODAY
+            </h2>
             <div className="contact-form-metal-frame overflow-hidden rounded-[36px]">
               <form
                 onSubmit={onSubmit}
-                className="contact-form-metal-inner relative overflow-hidden px-6 py-6 sm:px-8 sm:py-8 bg-[#0F0F0F]"
+                className="contact-form-metal-inner relative overflow-hidden bg-[#0f0f0f] px-6 py-6 sm:px-6 sm:py-6"
               >
                 {/* Honeypot: bots often fill hidden fields; humans should leave empty */}
                 <input
@@ -541,11 +538,11 @@ const GetInTouchSection = () => {
                   {!isConfigured ? (
                     <p className="max-w-[480px] text-center font-inter text-[14px] leading-normal text-[#767676]">
                       Online submission is unavailable while email is not
-                      configured. Please call us or use the email address on
-                      the left.
+                      configured. Please call us or use the email address on the
+                      left.
                     </p>
                   ) : null}
-                  {(validationError || (!successMessage && sendError)) ? (
+                  {validationError || (!successMessage && sendError) ? (
                     <p
                       className="max-w-[480px] text-center font-inter text-[14px] text-[#f87171]"
                       role="alert"
