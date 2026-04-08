@@ -99,10 +99,10 @@ const AboutSection = () => {
   return (
     <div
       ref={sectionRef}
-      className="relative z-10 bg-[#0F0F0F] w-screen"
+      className="relative z-10 w-full bg-[#0F0F0F]"
       style={{ height: `${sectionVh * 100}vh` }}
     >
-      <div className="sticky top-0 flex h-svh min-h-dvh flex-col items-center justify-center w-screen bg-[#0F0F0F]">
+      <div className="sticky top-0 flex h-svh min-h-dvh w-full flex-col items-center justify-center bg-[#0F0F0F]">
         <div className="flex flex-row gap-[164px]">
           <Image
             src="/images/home_p2_show.webp"

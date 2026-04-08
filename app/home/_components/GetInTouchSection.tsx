@@ -12,7 +12,7 @@ const GetInTouchSection = () => {
     <div
       id="get-in-touch-section"
       style={{ minHeight: height ? `${height}px` : "100vh" }}
-      className="relative w-screen overflow-hidden bg-[#0f0f0f]"
+      className="relative w-full overflow-hidden bg-[#0f0f0f]"
     >
       <div
         className={cn(

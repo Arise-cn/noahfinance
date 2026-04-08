@@ -239,7 +239,7 @@ const ClientsPartnersSection = ({
   return (
     <section
       className={cn(
-        "relative z-10 w-screen flex flex-col overflow-hidden bg-[#0F0F0F]",
+        "relative z-10 flex w-full flex-col overflow-hidden bg-[#0F0F0F]",
         "pb-16 md:pb-20",
       )}
     >

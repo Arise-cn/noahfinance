@@ -46,7 +46,7 @@ const LendingSolutionsSection = () => {
   return (
     <div
       style={{ minHeight: height ? `${height}px` : "100vh" }}
-      className="relative w-screen overflow-hidden bg-[#0f0f0f]"
+      className="relative w-full overflow-hidden bg-[#0f0f0f]"
     >
       <div
         className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-[min(613px,90vh)] w-[min(1920px,200vw)] -translate-x-1/2 -translate-y-1/2"
