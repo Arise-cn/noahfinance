@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:pages": "BASE_PATH=/noahfinance next build",
+    "deploy:pages": "BASE_PATH=/noahfinance next build && BASE_PATH=/noahfinance bash scripts/deploy-pages.sh",
     "start": "next start",
     "lint": "eslint"
   },
