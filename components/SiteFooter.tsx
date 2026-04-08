@@ -10,8 +10,8 @@ export default function SiteFooter() {
         )}
       >
         <img
-          src="/images/Logo.png"
-          className="h-[48px] w-[184px] shrink-0 object-contain object-left"
+          src="/images/text_logo.png"
+          className="h-[28px] w-[214px] shrink-0 object-contain object-left"
           alt="Noah Finance"
         />
         <div className="flex flex-col gap-3">
