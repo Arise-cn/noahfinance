@@ -3,6 +3,7 @@ import ClientsPartnersSection from "./_components/ClientsPartnersSection";
 import HeroSection from "./_components/HeroSection";
 import GetInTouchSection from "./_components/GetInTouchSection";
 import LendingSolutionsSection from "./_components/LendingSolutionsSection";
+import ScrollToTopButton from "./_components/ScrollToTopButton";
 import WhatWeDoSection from "./_components/WhatWeDoSection";
 import { getPartnerImageSrcs } from "./_lib/getPartnerImageSrcs";
 
@@ -19,6 +20,7 @@ const HomePage = async () => {
       <LendingSolutionsSection />
       <GetInTouchSection />
       <ClientsPartnersSection partnerImageSrcs={partnerImageSrcs} />
+      <ScrollToTopButton />
     </div>
   );
 };
