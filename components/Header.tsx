@@ -1,5 +1,6 @@
 "use client";
 
+import AboutUsPopupMenu from "@/components/AboutUsPopupMenu";
 import LoansPopupMenu from "@/components/LoansPopupMenu";
 import { NAV_ITEMS } from "@/constants/nav";
 import { cn } from "@/utils/cn";
@@ -18,6 +19,7 @@ import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 
 const LOANS_HREF = "/loans";
+const ABOUT_US_HREF = "/about-us";
 
 function ChevronDown({ className }: { className?: string }) {
   return (
@@ -139,6 +141,77 @@ function LoansHeaderNavItem({
   );
 }
 
+function AboutUsHeaderNavItem({
+  item,
+  pathname,
+}: {
+  item: NavItem;
+  pathname: string;
+}) {
+  const router = useRouter();
+  const [popupMounted, setPopupMounted] = useState(false);
+  const aboutUsPopupRef = useRef<PopupActions>(null);
+
+  useEffect(() => {
+    setPopupMounted(true);
+  }, []);
+
+  useEffect(() => {
+    const id = window.setTimeout(() => {
+      aboutUsPopupRef.current?.close();
+    }, 0);
+    return () => window.clearTimeout(id);
+  }, [pathname]);
+
+  if (!popupMounted) {
+    return (
+      <LoansNavTrigger
+        label={item.name}
+        menuOpen={false}
+        pathname={pathname}
+        baseHref={ABOUT_US_HREF}
+        onClick={() => router.push("/about-us/our-team")}
+      />
+    );
+  }
+
+  return (
+    <Popup
+      ref={aboutUsPopupRef}
+      trigger={(open: boolean) => (
+        <LoansNavTrigger
+          label={item.name}
+          menuOpen={open}
+          pathname={pathname}
+          baseHref={ABOUT_US_HREF}
+        />
+      )}
+      position="bottom center"
+      offsetY={10}
+      on={["click", "hover"]}
+      mouseLeaveDelay={250}
+      arrow={false}
+      closeOnDocumentClick
+      closeOnEscape
+      nested
+      contentStyle={{
+        width: "auto",
+        padding: 0,
+        background: "transparent",
+        border: "none",
+        boxShadow: "none",
+        zIndex: 100,
+      }}
+      overlayStyle={{
+        background: "transparent",
+        zIndex: 99,
+      }}
+    >
+      <AboutUsPopupMenu popupRef={aboutUsPopupRef} />
+    </Popup>
+  );
+}
+
 const HeaderNav = () => {
   const pathname = usePathname();
 
@@ -155,8 +228,18 @@ const HeaderNav = () => {
               />
             );
           }
+          if (item.href === ABOUT_US_HREF) {
+            return (
+              <AboutUsHeaderNavItem
+                key={item.href}
+                item={item}
+                pathname={pathname}
+              />
+            );
+          }
 
-          const isActive = item.href === pathname;
+          const isActive =
+            pathname === item.href || pathname.startsWith(`${item.href}/`);
           return (
             <Link
               key={item.href}
@@ -197,14 +280,15 @@ type LoansNavTriggerProps = {
   label: string;
   menuOpen: boolean;
   pathname: string;
+  baseHref?: string;
 } & ComponentPropsWithoutRef<"button">;
 
 const LoansNavTrigger = forwardRef<HTMLButtonElement, LoansNavTriggerProps>(
   function LoansNavTrigger(
-    { label, menuOpen, pathname, className, ...rest },
+    { label, menuOpen, pathname, baseHref = LOANS_HREF, className, ...rest },
     ref,
   ) {
-    const isActive = pathname.startsWith(LOANS_HREF);
+    const isActive = pathname.startsWith(baseHref);
 
     return (
       <button

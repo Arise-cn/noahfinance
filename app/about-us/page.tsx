@@ -1,7 +1,7 @@
-import AboutTeamSection from "./_components/AboutTeamSection";
+import { redirect } from "next/navigation";
 
 const AboutUsPage = () => {
-  return <AboutTeamSection />;
+  redirect("/about-us/our-team");
 };
 
 export default AboutUsPage;

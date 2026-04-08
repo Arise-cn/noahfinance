@@ -192,7 +192,7 @@ function PartnerTrack({ images }: { images: readonly string[] }) {
     <div
       ref={containerRef}
       className={cn(
-        "relative overflow-hidden select-none touch-pan-y",
+        "relative m-0 w-full max-w-none overflow-hidden p-0 select-none touch-pan-y",
         isDragging ? "cursor-grabbing" : "cursor-grab",
       )}
       onPointerEnter={onPointerEnter}
@@ -211,8 +211,8 @@ function PartnerTrack({ images }: { images: readonly string[] }) {
             <Image
               src={src}
               alt={`Partner lender ${(i % images.length) + 1}`}
-              width={300}
-              height={100}
+              width={320}
+              height={160}
               className="max-h-[91px] w-auto max-w-full object-contain"
             />
           </div>
@@ -237,11 +237,16 @@ const ClientsPartnersSection = ({
   }, [activeIndex]);
 
   return (
-    <section className="relative z-10 w-screen flex flex-col overflow-hidden bg-[#0F0F0F]">
+    <section
+      className={cn(
+        "relative z-10 w-screen flex flex-col overflow-hidden bg-[#0F0F0F]",
+        "pb-16 md:pb-20",
+      )}
+    >
       <div
         className={cn(
           "mx-auto w-full max-w-[1920px]",
-          "px-8 py-16 pb-16 md:px-[136px] md:pb-20 xl:px-[136px]",
+          "px-8 pt-16 md:px-[136px] xl:px-[136px]",
         )}
       >
         <h2 className="text-center font-misans text-[32px] font-black leading-normal text-white">
@@ -313,17 +318,22 @@ const ClientsPartnersSection = ({
         <h2 className="mt-20 text-center font-misans text-[32px] font-black leading-normal text-white lg:mt-28">
           PARTNER LENDERS
         </h2>
-        <p className="mx-auto mt-4 max-w-[720px] text-center font-inter text-[16px] font-normal leading-[24px] text-white">
+        <p
+          className={cn(
+            "mx-auto mt-4 max-w-[720px] text-center font-inter text-[16px] font-normal leading-[24px] text-white",
+            partnerImageSrcs.length > 0 ? "mb-10 lg:mb-12" : null,
+          )}
+        >
           Selecting from our extensive lender network for the mortgage products
           that you need
         </p>
-
-        {partnerImageSrcs.length > 0 ? (
-          <div className="mt-10 lg:mt-12">
-            <PartnerTrack images={partnerImageSrcs} />
-          </div>
-        ) : null}
       </div>
+
+      {partnerImageSrcs.length > 0 ? (
+        <div className="m-0 w-full max-w-none shrink-0 p-0">
+          <PartnerTrack images={partnerImageSrcs} />
+        </div>
+      ) : null}
     </section>
   );
 };

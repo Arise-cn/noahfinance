@@ -1,5 +1,4 @@
 import { cn } from "@/utils/cn";
-import Image from "next/image";
 
 type TeamMember = {
   id: string;
@@ -129,63 +128,23 @@ function TeamCard({ member }: { member: TeamMember }) {
 
 const AboutTeamSection = () => {
   return (
-    <section className="relative min-h-screen w-screen overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 z-0">
-        <Image
-          src="/images/about_us_bg.webp"
-          alt=""
-          fill
-          className="object-cover"
-          sizes="100vw"
-          priority
-        />
-        <div className="absolute inset-0 bg-black/60" aria-hidden />
-      </div>
-
-      {/* About 专用半调波浪（勿与 home_p4 / contact 共用资源） */}
-      <div
-        className="pointer-events-none absolute bottom-0 left-0 right-0 z-1 h-[min(610px,55vh)] opacity-20"
-        aria-hidden
-      >
-        <Image
-          src="/images/about_us_wave.webp"
-          alt=""
-          fill
-          className="object-cover object-bottom"
-          sizes="100vw"
-          priority={false}
-        />
-      </div>
+    <div className="pb-16">
+      <h1 className="text-left font-misans text-[52px] font-black leading-normal text-white">
+        INTRODUCING OUR TEAM
+      </h1>
 
       <div
         className={cn(
-          "relative z-10 mx-auto w-full max-w-[1920px]",
-          /* 标题 y≈204：在 Header 下留出与稿接近的顶距 */
-          "px-8 pb-24 pt-[168px] md:px-[136px] md:pt-[176px] xl:pt-[180px]",
+          "mt-[92px] grid w-full justify-items-center gap-x-12 gap-y-12",
+          "grid-cols-1 sm:grid-cols-2",
+          "xl:grid-cols-3 xl:justify-items-center",
         )}
       >
-        {/*
-          内容区宽 329×3 + 48×2 = 1083，在 1920 上水平居中后左缘 ≈418，与 Figma 对齐
-        */}
-        <div className="mx-auto w-full max-w-[1083px]">
-          <h1 className="text-left font-misans text-[52px] font-black leading-normal text-white">
-            INTRODUCING OUR TEAM
-          </h1>
-
-          <div
-            className={cn(
-              "mt-[92px] grid w-full justify-items-center gap-x-12 gap-y-12",
-              "grid-cols-1 sm:grid-cols-2",
-              "xl:grid-cols-3 xl:justify-items-center",
-            )}
-          >
-            {TEAM.map((member) => (
-              <TeamCard key={member.id} member={member} />
-            ))}
-          </div>
-        </div>
+        {TEAM.map((member) => (
+          <TeamCard key={member.id} member={member} />
+        ))}
       </div>
-    </section>
+    </div>
   );
 };
 
