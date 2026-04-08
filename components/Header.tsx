@@ -50,18 +50,18 @@ const Header = () => {
     <header className="fixed top-[36px] z-50 grid w-full grid-cols-[1fr_auto_1fr] items-center gap-8 px-[136px]">
       <img
         src="/images/Logo.png"
-        className="h-[48px] w-[184px] justify-self-start"
+        className="h-[36px] w-[136px] justify-self-start"
         alt="logo"
       />
       <HeaderNav />
-      <div className="header-phone-pill-frame flex h-[48px] justify-self-end overflow-hidden">
-        <div className="header-phone-pill-inner flex h-full w-full items-center justify-center gap-[12px] rounded-full px-[24px]">
+      <div className="header-phone-pill-frame flex h-[36px] justify-self-end overflow-hidden">
+        <div className="header-phone-pill-inner flex h-full w-full items-center justify-center gap-[12px] rounded-full px-[16px]">
           <img
             src="/images/phone_icon.png"
-            className="h-[24px] w-[24px]"
+            className="h-[16px] w-[16px]"
             alt="phone"
           />
-          <p className="font-inter text-[20px] font-normal tracking-[0.02em] text-[#e8d07a]">
+          <p className="font-inter text-[16px] font-normal tracking-[0.02em] text-[#e8d07a]">
             03 9341 5678
           </p>
         </div>
@@ -216,7 +216,7 @@ const HeaderNav = () => {
   const pathname = usePathname();
 
   return (
-    <div className="header-phone-pill-frame flex h-[48px] justify-self-end overflow-hidden">
+    <div className="header-phone-pill-frame flex h-[44px] justify-self-end overflow-hidden">
       <div className="header-phone-pill-inner flex h-full w-full items-center justify-center overflow-hidden rounded-full">
         {NAV_ITEMS.map((item) => {
           if (item.href === LOANS_HREF) {
