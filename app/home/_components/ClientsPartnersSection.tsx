@@ -1,8 +1,9 @@
 "use client";
 
 import { cn } from "@/utils/cn";
+import { motion } from "motion/react";
 import Image from "next/image";
-import { type PointerEvent, useEffect, useMemo, useRef, useState } from "react";
+import { type PointerEvent, useEffect, useRef, useState } from "react";
 
 const TESTIMONIALS = [
   {
@@ -219,11 +220,6 @@ const ClientsPartnersSection = ({
 }: ClientsPartnersSectionProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const ordered = useMemo(() => {
-    const rest = TESTIMONIALS.filter((_, i) => i !== activeIndex);
-    return [TESTIMONIALS[activeIndex], ...rest];
-  }, [activeIndex]);
-
   return (
     <section
       className={cn(
@@ -242,14 +238,25 @@ const ClientsPartnersSection = ({
         </h2>
 
         <div className="mt-10 flex flex-col items-stretch gap-4 lg:mt-14 lg:flex-row lg:justify-center lg:gap-3 xl:gap-4">
-          {ordered.map((item, orderIdx) => {
-            const isExpanded = orderIdx === 0;
-            if (isExpanded) {
-              return (
-                <div
-                  key={item.id}
-                  className="mx-auto h-[min(498px,70vh)] min-h-[420px] w-full max-w-[424px] shrink-0 overflow-hidden rounded-[36px] border border-[#e8d587] lg:mx-0"
-                >
+          {TESTIMONIALS.map((item, itemIdx) => {
+            const isExpanded = itemIdx === activeIndex;
+            return (
+              <motion.button
+                key={`peek-${item.id}`}
+                type="button"
+                layout
+                animate={{ width: isExpanded ? 424 : 141 }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                onClick={() => setActiveIndex(itemIdx)}
+                className={cn(
+                  "mx-auto h-[min(498px,70vh)] min-h-[420px] shrink-0 overflow-hidden rounded-[36px] text-left lg:mx-0",
+                  isExpanded
+                    ? "border border-[#e8d587]"
+                    : "border-0 bg-[#151515] backdrop-blur-[19.4px]",
+                )}
+                aria-label={`Show testimonial from ${item.name}`}
+              >
+                {isExpanded ? (
                   <div
                     className={cn(
                       "relative h-full w-full overflow-hidden rounded-[35px]",
@@ -278,25 +285,12 @@ const ClientsPartnersSection = ({
                       <StarRow />
                     </div>
                   </div>
-                </div>
-              );
-            }
-
-            const peekIndex = TESTIMONIALS.findIndex((t) => t.id === item.id);
-
-            return (
-              <button
-                key={`peek-${item.id}`}
-                type="button"
-                onClick={() => setActiveIndex(peekIndex)}
-                className={cn(
-                  "mx-auto flex h-[min(498px,70vh)] min-h-[420px] w-full max-w-[141px] shrink-0 cursor-pointer flex-col items-center justify-center rounded-[36px] border-0 transition-opacity hover:opacity-90 lg:mx-0",
-                  "bg-[#151515] backdrop-blur-[19.4px]",
+                ) : (
+                  <div className="flex h-full w-full items-center justify-center">
+                    <VerticalName name={item.name} variant="muted" />
+                  </div>
                 )}
-                aria-label={`Show testimonial from ${item.name}`}
-              >
-                <VerticalName name={item.name} variant="muted" />
-              </button>
+              </motion.button>
             );
           })}
         </div>
