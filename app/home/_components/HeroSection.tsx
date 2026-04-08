@@ -1,9 +1,17 @@
+"use client";
+
 import { cn } from "@/utils/cn";
 
 const publicAsset = (path: string) =>
   `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${path}`;
 
 const HeroSection = () => {
+  const scrollToGetInTouch = () => {
+    const section = document.getElementById("get-in-touch-section");
+    if (!section) return;
+    section.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   return (
     <div
       className="w-full h-screen bg-cover bg-center bg-no-repeat"
@@ -20,14 +28,16 @@ const HeroSection = () => {
           </p>
           <div className="header-phone-pill-frame flex h-[64px] justify-self-end overflow-hidden mt-[48px]">
             <div className="header-phone-pill-inner flex h-full w-full items-center justify-center rounded-full">
-              <p
+              <button
+                type="button"
+                onClick={scrollToGetInTouch}
                 className={cn(
                   "bg-linear-to-r from-[#E8D587] via-[#FFF5C9] to-[#E8D587] bg-clip-text text-transparent uppercase px-[72px]",
-                  "font-inter text-[28px] font-semibold",
+                  "font-inter text-[28px] font-semibold cursor-pointer",
                 )}
               >
                 GOT IN TOUCH
-              </p>
+              </button>
             </div>
           </div>
         </div>
