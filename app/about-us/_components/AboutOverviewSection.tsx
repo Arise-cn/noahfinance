@@ -1,3 +1,7 @@
+"use client";
+
+import toast from "react-hot-toast";
+
 const RESPONSIBILITIES = [
   "Work closely with an experienced mentor to enhance your mortgage broking skills.",
   "Manage both residential and commercial loan applications - from consultation to settlement and post-settlement follow-up.",
@@ -60,6 +64,24 @@ function NumberedList({ items }: { items: readonly string[] }) {
 }
 
 export default function AboutOverviewSection() {
+  const handleCopyEmail = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const email = "recruitment@noahfinance.com.au";
+
+    try {
+      await navigator.clipboard.writeText(email);
+      toast.success("Copied successfully", {
+        position: "top-center",
+      });
+    } catch {
+      toast.error("Copy failed. Please copy manually.", {
+        position: "top-center",
+      });
+    }
+  };
+
   return (
     <div className="pb-16">
       <h1 className="font-misans text-[52px] font-black leading-normal text-white">
@@ -122,21 +144,25 @@ export default function AboutOverviewSection() {
         <span className="font-inter text-[18px] font-light leading-8 text-white">
           Send your resume to
         </span>
-        <a
-          href="mailto:recruitment@noahfinance.com.au"
-          className="about-email-frame inline-flex"
-        >
+        <div className="about-email-frame inline-flex">
           <span className="about-email-inner inline-flex items-center gap-3 px-4 py-2 bg-[#0f0f0f]">
-            <span className="font-inter text-[18px] font-medium text-[#e8d587]">
+            <a
+              href="mailto:recruitment@noahfinance.com.au"
+              className="font-inter text-[18px] font-medium text-[#e8d587]"
+            >
               recruitment@noahfinance.com.au
-            </span>
+            </a>
             <span className="about-email-tag-frame inline-flex">
-              <span className="about-email-tag-inner px-2 py-1 font-inter text-sm font-semibold text-[#0f0f0f]">
+              <button
+                type="button"
+                className="about-email-tag-inner cursor-pointer px-2 py-1 font-inter text-sm font-semibold text-[#0f0f0f]"
+                onClick={handleCopyEmail}
+              >
                 COPY
-              </span>
+              </button>
             </span>
           </span>
-        </a>
+        </div>
       </div>
 
       <p className="mt-8 font-inter text-[18px] font-light leading-8 text-white">

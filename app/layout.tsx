@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import PageTransition from "@/components/PageTransition";
 import SiteFooter from "@/components/SiteFooter";
+import ToastProvider from "@/components/ToastProvider";
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -23,6 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistMono.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col font-sans">
+        <ToastProvider />
         <Header />
         <PageTransition>{children}</PageTransition>
         <SiteFooter />
