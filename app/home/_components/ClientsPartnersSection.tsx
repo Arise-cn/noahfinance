@@ -15,25 +15,13 @@ const TESTIMONIALS = [
     id: "t2",
     name: "Linda Collins",
     quote:
-      "Noah Finance made refinancing straightforward. Clear communication and tailored options—we felt supported throughout.",
+      "We were given excellent servicefrom Noah Finance. They were thorough and played ahuge role in securing our property purchase. Highlyrecommended service to anyone who has a borrowingneed!",
   },
   {
     id: "t3",
     name: "Aaron Lynas",
     quote:
-      "Responsive team and access to a broad lender panel. They found a structure that fit our business needs.",
-  },
-  {
-    id: "t4",
-    name: "Connor Ardill",
-    quote:
-      "I received wonderful service from Noah Finance. We were offered professional, balanced and unbiased advice on my questions in applying for the loan. I highly recommend the service for your loan application.",
-  },
-  {
-    id: "t5",
-    name: "Connor Ardill",
-    quote:
-      "I received wonderful service from Noah Finance. We were offered professional, balanced and unbiased advice on my questions in applying for the loan. I highly recommend the service for your loan application.",
+      'Noah Finance cared and listened to our needs. Offeringalternative financing options and carefully explained tous the differences involved for us to pick the best choice.Very happy to have used Noah!"',
   },
 ] as const;
 
@@ -47,9 +35,9 @@ function VerticalName({
   return (
     <span
       className={cn(
-        "inline-block text-[20px] tracking-wide",
+        "inline-block text-[20px] leading-none tracking-normal",
         variant === "gold"
-          ? "font-misans font-black text-[#0d0d0d]"
+          ? "font-inter font-normal text-[#0d0d0d]"
           : "font-inter font-semibold text-[#fff2ba]",
       )}
       style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
@@ -206,14 +194,14 @@ function PartnerTrack({ images }: { images: readonly string[] }) {
         {loopImages.map((src, i) => (
           <div
             key={`${src}-${i}`}
-            className="mr-6 flex h-[140px] w-[250px] shrink-0 items-center justify-center rounded-[12px] bg-white px-4 sm:h-[150px] sm:w-[280px] md:h-[160px] md:w-[320px]"
+            className="mr-12 flex h-[160px] w-[320px] shrink-0 items-center justify-center rounded-[12px] bg-white px-[10px]"
           >
             <Image
               src={src}
               alt={`Partner lender ${(i % images.length) + 1}`}
               width={320}
               height={160}
-              className="max-h-[91px] w-auto max-w-full object-contain"
+              className="h-auto max-h-[132px] w-auto max-w-[300px] object-contain"
             />
           </div>
         ))}
@@ -260,36 +248,34 @@ const ClientsPartnersSection = ({
               return (
                 <div
                   key={item.id}
-                  className="contact-form-metal-frame mx-auto w-full max-w-[424px] shrink-0 overflow-hidden rounded-[36px] lg:mx-0"
+                  className="mx-auto h-[min(498px,70vh)] min-h-[420px] w-full max-w-[424px] shrink-0 overflow-hidden rounded-[36px] border border-[#e8d587] lg:mx-0"
                 >
                   <div
                     className={cn(
-                      "flex h-[min(498px,70vh)] min-h-[420px] w-full overflow-hidden rounded-[35px]",
-                      "bg-linear-to-b from-[#0f0f0f] from-[2.4%] via-[#261f01] via-34% to-[#0f0f0f]",
+                      "relative h-full w-full overflow-hidden rounded-[35px]",
+                      "bg-radial-[at_75%_46%] from-[#3B2E00] via-[#0f0f0f] to-[#0f0f0f]",
                       "backdrop-blur-[19.4px]",
                     )}
                   >
                     <div
                       className={cn(
-                        "flex w-[31px] shrink-0 items-center justify-center rounded-[3px]",
+                        "absolute left-6 top-9 flex h-[139px] w-[31px] items-center justify-center rounded-[3px]",
                         "bg-linear-to-b from-[#ffeeaa] via-[#ae9632] via-58% to-[#948132]",
                       )}
                     >
                       <VerticalName name={item.name} variant="gold" />
                     </div>
-                    <div className="flex min-w-0 flex-1 flex-col gap-4 px-5 py-6 sm:px-6">
-                      <span
-                        className="font-serif text-[48px] leading-none text-[#e8d587]"
-                        aria-hidden
-                      >
-                        &ldquo;
-                      </span>
-                      <p className="font-inter text-[16px] font-normal leading-[24px] text-[#e8d587]">
-                        {item.quote}
-                      </p>
-                      <div className="mt-auto pt-2">
-                        <StarRow />
-                      </div>
+                    <span
+                      className="absolute left-6 top-[252px] font-serif text-[48px] leading-none text-[#e8d587]"
+                      aria-hidden
+                    >
+                      &ldquo;
+                    </span>
+                    <p className="absolute left-6 top-[290px] w-[376px] font-inter text-[16px] font-normal leading-[24px] text-[#e8d587]">
+                      {item.quote}
+                    </p>
+                    <div className="absolute left-6 top-[434px]">
+                      <StarRow />
                     </div>
                   </div>
                 </div>
@@ -316,11 +302,11 @@ const ClientsPartnersSection = ({
         </div>
 
         <h2 className="mt-20 text-center font-misans text-[32px] font-black leading-normal text-white lg:mt-28">
-          PARTNER LENDERS
+          PARTENER LENDERS
         </h2>
         <p
           className={cn(
-            "mx-auto mt-4 max-w-[720px] text-center font-inter text-[16px] font-normal leading-[24px] text-white",
+            "mx-auto mt-4 text-center font-inter text-[16px] font-normal leading-[24px] whitespace-nowrap text-white",
             partnerImageSrcs.length > 0 ? "mb-10 lg:mb-12" : null,
           )}
         >
