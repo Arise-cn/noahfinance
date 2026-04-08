@@ -190,4 +190,110 @@ body {
     backdrop-filter: blur(19.4px);
     -webkit-backdrop-filter: blur(19.4px);
   }
+
+  .about-chip-frame {
+    padding: 1px;
+    border-radius: 4px;
+    background:
+      radial-gradient(
+        ellipse 125% 210% at 0% 0%,
+        #fff2ba 0%,
+        rgba(232, 213, 135, 0.55) 18%,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse 125% 210% at 100% 100%,
+        #e8d587 0%,
+        rgba(163, 155, 119, 0.45) 22%,
+        transparent 52%
+      ),
+      conic-gradient(
+        from 215deg at 50% 50%,
+        #2a261c 0deg,
+        #4a4334 55deg,
+        #7a7158 118deg,
+        #3d362b 175deg,
+        #2c2820 232deg,
+        #6b634c 285deg,
+        #9a8f6e 320deg,
+        #2a261c 360deg
+      );
+  }
+
+  .about-chip-inner {
+    border-radius: 3px;
+    background: rgba(5, 5, 5, 0.7);
+    backdrop-filter: blur(19.4px);
+    -webkit-backdrop-filter: blur(19.4px);
+  }
+
+  .about-email-frame {
+    padding: 1px;
+    border-radius: 4px;
+    background:
+      radial-gradient(
+        ellipse 125% 210% at 0% 0%,
+        #fff2ba 0%,
+        rgba(232, 213, 135, 0.55) 18%,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse 125% 210% at 100% 100%,
+        #e8d587 0%,
+        rgba(163, 155, 119, 0.45) 22%,
+        transparent 52%
+      ),
+      conic-gradient(
+        from 215deg at 50% 50%,
+        #2a261c 0deg,
+        #4a4334 55deg,
+        #7a7158 118deg,
+        #3d362b 175deg,
+        #2c2820 232deg,
+        #6b634c 285deg,
+        #9a8f6e 320deg,
+        #2a261c 360deg
+      );
+  }
+
+  .about-email-inner {
+    border-radius: 3px;
+    background: rgba(5, 5, 5, 0.7);
+    backdrop-filter: blur(19.4px);
+    -webkit-backdrop-filter: blur(19.4px);
+  }
+
+  .about-email-tag-frame {
+    padding: 1px;
+    border-radius: 3px;
+    background:
+      radial-gradient(
+        ellipse 125% 210% at 0% 0%,
+        #fff2ba 0%,
+        rgba(232, 213, 135, 0.55) 18%,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse 125% 210% at 100% 100%,
+        #e8d587 0%,
+        rgba(163, 155, 119, 0.45) 22%,
+        transparent 52%
+      ),
+      conic-gradient(
+        from 215deg at 50% 50%,
+        #2a261c 0deg,
+        #4a4334 55deg,
+        #7a7158 118deg,
+        #3d362b 175deg,
+        #2c2820 232deg,
+        #6b634c 285deg,
+        #9a8f6e 320deg,
+        #2a261c 360deg
+      );
+  }
+
+  .about-email-tag-inner {
+    border-radius: 2px;
+    background: #e8d587;
+  }
 }

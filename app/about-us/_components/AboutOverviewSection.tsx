@@ -43,10 +43,12 @@ function NumberedList({ items }: { items: readonly string[] }) {
     <div className="mt-6 flex flex-col gap-6">
       {items.map((item, index) => (
         <div key={item} className="flex items-start gap-3">
-          <div className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded border border-[#e8d587] bg-[#050505b3]">
-            <span className="font-inter text-base font-medium text-[#e8d587]">
-              {index + 1}
-            </span>
+          <div className="about-chip-frame mt-1 h-6 w-6 shrink-0">
+            <div className="about-chip-inner flex h-full w-full items-center justify-center bg-[#0f0f0f]">
+              <span className="font-inter text-base font-medium text-[#e8d587]">
+                {index + 1}
+              </span>
+            </div>
           </div>
           <p className="font-inter text-[18px] font-light leading-8 text-white">
             {item}
@@ -83,8 +85,8 @@ export default function AboutOverviewSection() {
       <p className="mt-10 font-inter text-[18px] font-light leading-8 text-white">
         You will join a supportive environment where learning, collaboration,
         and growth come first. This role suits someone who is self-driven,
-        enjoys helping people, and wants to build a long-term career in
-        mortgage broking.
+        enjoys helping people, and wants to build a long-term career in mortgage
+        broking.
       </p>
 
       <h3 className="mt-14 font-misans text-2xl font-black text-white">
@@ -122,13 +124,17 @@ export default function AboutOverviewSection() {
         </span>
         <a
           href="mailto:recruitment@noahfinance.com.au"
-          className="inline-flex items-center gap-3 rounded border border-[#e8d587] bg-[#050505b3] px-4 py-2"
+          className="about-email-frame inline-flex"
         >
-          <span className="font-inter text-[18px] font-medium text-[#e8d587]">
-            recruitment@noahfinance.com.au
-          </span>
-          <span className="rounded bg-[#e8d587] px-2 py-1 font-inter text-sm font-semibold text-[#0f0f0f]">
-            EMAIL
+          <span className="about-email-inner inline-flex items-center gap-3 px-4 py-2 bg-[#0f0f0f]">
+            <span className="font-inter text-[18px] font-medium text-[#e8d587]">
+              recruitment@noahfinance.com.au
+            </span>
+            <span className="about-email-tag-frame inline-flex">
+              <span className="about-email-tag-inner px-2 py-1 font-inter text-sm font-semibold text-[#0f0f0f]">
+                COPY
+              </span>
+            </span>
           </span>
         </a>
       </div>
