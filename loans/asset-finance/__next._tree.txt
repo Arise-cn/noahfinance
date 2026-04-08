@@ -1,4 +1,4 @@
 :HL["/noahfinance/_next/static/chunks/01nfv1o16~727.css","style"]
 :HL["/noahfinance/_next/static/media/797e433ab948586e-s.p.0.q-h669a_dqa.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/images/text_logo.png","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"loans","param":null,"prefetchHints":0,"slots":{"children":{"name":"slug","param":{"type":"d","key":"asset-finance","siblings":null},"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"-6fgbnx1iE5KntYLEBdsj"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"loans","param":null,"prefetchHints":0,"slots":{"children":{"name":"slug","param":{"type":"d","key":"asset-finance","siblings":null},"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"Xk1Xdp35bGj22e6vMY86g"}
