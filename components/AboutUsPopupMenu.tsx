@@ -19,32 +19,34 @@ export default function AboutUsPopupMenu({ popupRef }: AboutUsPopupMenuProps) {
   };
 
   return (
-    <nav
-      className="w-full max-w-[312px] rounded-[24px] border border-solid border-[#e8d587] bg-[rgba(5,5,5,0.7)] px-4 py-10 backdrop-blur-[19.4px] [-webkit-backdrop-filter:blur(19.4px)]"
-      aria-label="About us sections"
-    >
-      <ul className="mx-auto flex w-[280px] max-w-full list-none flex-col gap-3 p-0">
-        {ABOUT_SUB_ROUTES.map((route) => {
-          const href = `/about-us/${route.slug}`;
-          const isActive = pathname === href;
-          return (
-            <li key={route.slug}>
-              <Link
-                href={href}
-                onClick={onNavigate}
-                className={cn(
-                  "flex h-12 w-full items-center rounded-[12px] px-4 py-3 font-inter text-[20px] font-semibold leading-normal transition-colors",
-                  isActive
-                    ? "bg-[#161718] text-[#e7d487]"
-                    : "bg-transparent text-white hover:bg-[#161718]/80 hover:text-[#e7d487]",
-                )}
-              >
-                {route.navLabel}
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
-    </nav>
+    <div className="home-service-expanded-frame w-full max-w-[312px] overflow-hidden rounded-[24px]">
+      <nav
+        className="home-service-expanded-inner px-4 py-10 bg-[#0f0f0f]"
+        aria-label="About us sections"
+      >
+        <ul className="mx-auto flex w-[280px] max-w-full list-none flex-col gap-3 p-0">
+          {ABOUT_SUB_ROUTES.map((route) => {
+            const href = `/about-us/${route.slug}`;
+            const isActive = pathname === href;
+            return (
+              <li key={route.slug}>
+                <Link
+                  href={href}
+                  onClick={onNavigate}
+                  className={cn(
+                    "flex h-12 w-full items-center rounded-[12px] px-4 py-3 font-inter text-[20px] font-semibold leading-normal transition-colors",
+                    isActive
+                      ? "bg-[#161718] text-[#e7d487]"
+                      : "bg-transparent text-white hover:bg-[#161718]/80 hover:text-[#e7d487]",
+                  )}
+                >
+                  {route.navLabel}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+    </div>
   );
 }
