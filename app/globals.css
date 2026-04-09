@@ -296,4 +296,17 @@ body {
     border-radius: 2px;
     background: #e8d587;
   }
+
+  /*
+   * Home · Get in touch 日期控件（WebKit）
+   * 保留原生 date 行为，同时让系统图标透明，由组件叠加金色图标。
+   */
+  .gold-date-input {
+    color-scheme: dark;
+  }
+
+  .gold-date-input::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    opacity: 0;
+  }
 }

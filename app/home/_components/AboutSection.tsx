@@ -102,7 +102,7 @@ const AboutSection = () => {
       className="relative z-10 w-full bg-[#0F0F0F]"
       style={{ height: `${sectionVh * 100}vh` }}
     >
-      <div className="sticky top-0 flex flex-row h-svh min-h-dvh w-full flex-col items-center justify-center bg-[#0F0F0F]">
+      <div className="sticky top-0 flex flex-row h-svh min-h-dvh w-full items-center justify-center bg-[#0F0F0F]">
         <div className="flex flex-row gap-[164px] transform scale-70">
           <Image
             src="/images/home_p2_show.webp"
