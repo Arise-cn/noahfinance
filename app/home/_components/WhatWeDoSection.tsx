@@ -49,11 +49,11 @@ function ServiceRowButton({
         "flex w-full text-left transition-colors hover:bg-white/3",
         isOpen
           ? cn(
-              "flex-col gap-8 sm:flex-row sm:items-center sm:gap-12",
-              figmaPadding
-                ? "px-[48px] py-[34px]"
-                : "px-8 py-[34px]",
-            )
+            "flex-col gap-8 sm:flex-row sm:items-center sm:gap-12",
+            figmaPadding
+              ? "px-[48px] py-[34px]"
+              : "px-8 py-[34px]",
+          )
           : "h-full items-center px-12",
       )}
       onClick={onSelect}
@@ -103,7 +103,7 @@ const WhatWeDoSection = () => {
       <div
         className={cn(
           "relative z-10 flex min-h-[inherit] w-full flex-col justify-center",
-          "px-8 py-16 md:px-[136px] xl:pl-[292px] xl:pr-[136px]",
+          "px-8 py-16 md:px-[136px] xl:pl-[292px] xl:pr-[136px] transform scale-80",
         )}
       >
         <h2 className="font-misans text-[52px] font-black leading-normal text-white">
@@ -129,10 +129,10 @@ const WhatWeDoSection = () => {
                     className={cn(
                       "w-full overflow-hidden rounded-[24px]",
                       !isMetalExpanded &&
-                        "backdrop-blur-[19.4px] bg-[rgba(15,15,15,0.3)]",
+                      "backdrop-blur-[19.4px] bg-[rgba(15,15,15,0.3)]",
                       isOpen &&
-                        !isMetalExpanded &&
-                        "border border-solid border-[#e8d587]",
+                      !isMetalExpanded &&
+                      "border border-solid border-[#e8d587]",
                       !isOpen && "h-[96px]",
                     )}
                   >

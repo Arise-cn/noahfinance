@@ -20,7 +20,7 @@ const GetInTouchSection = () => {
           "px-8 py-16 md:px-[136px] xl:pl-[292px] xl:pr-[136px]",
         )}
       >
-        <div className="mt-10 flex flex-row gap-[200px] items-center">
+        <div className="mt-10 flex flex-row gap-[200px] items-center transform scale-80">
           {/* Left: contact info, map, hours */}
           <div className="flex w-full min-w-0 flex-1 flex-col gap-8 lg:max-w-[560px]">
             <div className="flex flex-col gap-6">
