@@ -249,7 +249,7 @@ const ClientsPartnersSection = ({
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 onClick={() => setActiveIndex(itemIdx)}
                 className={cn(
-                  "mx-auto h-[min(498px,70vh)] min-h-[420px] shrink-0 overflow-hidden rounded-[36px] text-left lg:mx-0",
+                  "mx-auto h-[min(498px,70vh)] min-h-[420px] shrink-0 overflow-hidden rounded-[36px] text-left lg:mx-0 hover:bg-[#332a07]",
                   isExpanded
                     ? "border border-[#e8d587]"
                     : "border-0 bg-[#151515] backdrop-blur-[19.4px]",
