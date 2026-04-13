@@ -1,5 +1,0 @@
-1:"$Sreact.fragment"
-2:I[92643,["/noahfinance/_next/static/chunks/0dn69j.o9_alw.js","/noahfinance/_next/static/chunks/0wzh98z-dh0i4.js","/noahfinance/_next/static/chunks/0.sp12e3~--du.js","/noahfinance/_next/static/chunks/0hmutpyn3-6~c.js","/noahfinance/_next/static/chunks/00t7rfqd53ea2.js"],"default"]
-3:I[95653,["/noahfinance/_next/static/chunks/0dn69j.o9_alw.js","/noahfinance/_next/static/chunks/0wzh98z-dh0i4.js","/noahfinance/_next/static/chunks/0.sp12e3~--du.js","/noahfinance/_next/static/chunks/0hmutpyn3-6~c.js","/noahfinance/_next/static/chunks/00t7rfqd53ea2.js"],"default"]
-4:[]
-0:{"rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"isPartial":false,"staleTime":300,"varyParams":"$W4","buildId":"s60s423wXy1HqEzN_XMJ3"}
