@@ -17,10 +17,7 @@ export default function SiteFooter() {
         <div className="flex flex-col gap-3">
           <p className="font-inter text-[18px] font-semibold">ADDRESS</p>
           <p className="font-inter text-[14px] font-normal leading-normal">
-            1/534 Whitehorse Rd Mitcham VIC 3132
-          </p>
-          <p className="font-inter text-[14px] font-normal leading-normal">
-            Melbourne, VIC, Australia
+            Suite 603, 21 Ellingworth Parade, Box Hill VIC 3128
           </p>
         </div>
         <div className="flex flex-col gap-3">
