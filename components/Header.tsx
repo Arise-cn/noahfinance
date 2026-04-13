@@ -11,6 +11,7 @@ import {
   forwardRef,
   useEffect,
   useRef,
+  useSyncExternalStore,
   type ComponentPropsWithoutRef,
 } from "react";
 import type { PopupActions } from "reactjs-popup/dist/types";
@@ -72,6 +73,14 @@ const Header = () => {
 
 type NavItem = (typeof NAV_ITEMS)[number];
 
+function useHydrated() {
+  return useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
+}
+
 function LoansHeaderNavItem({
   item,
   pathname,
@@ -80,6 +89,7 @@ function LoansHeaderNavItem({
   pathname: string;
 }) {
   const router = useRouter();
+  const hydrated = useHydrated();
   const loansPopupRef = useRef<PopupActions>(null);
 
   useEffect(() => {
@@ -89,7 +99,7 @@ function LoansHeaderNavItem({
     return () => window.clearTimeout(id);
   }, [pathname]);
 
-  if (typeof window === "undefined") {
+  if (!hydrated) {
     return (
       <LoansNavTrigger
         label={item.name}
@@ -144,6 +154,7 @@ function ContactUsHeaderNavItem({
   pathname: string;
 }) {
   const router = useRouter();
+  const hydrated = useHydrated();
   const contactUsPopupRef = useRef<PopupActions>(null);
 
   useEffect(() => {
@@ -153,7 +164,7 @@ function ContactUsHeaderNavItem({
     return () => window.clearTimeout(id);
   }, [pathname]);
 
-  if (typeof window === "undefined") {
+  if (!hydrated) {
     return (
       <LoansNavTrigger
         label={item.name}
