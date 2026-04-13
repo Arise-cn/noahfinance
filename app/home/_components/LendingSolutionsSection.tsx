@@ -49,7 +49,7 @@ const LendingSolutionsSection = () => {
       className="relative w-full overflow-hidden bg-[#0f0f0f]"
     >
       <div
-        className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-[min(613px,90vh)] w-[min(1920px,200vw)] -translate-x-1/2 -translate-y-1/2"
+        className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-[min(613px,90vh)] w-[min(1920px,200vw)] -translate-x-1/2 -translate-y-1/2 transform scale-80"
         aria-hidden
       >
         <Image
@@ -65,7 +65,7 @@ const LendingSolutionsSection = () => {
       <div
         className={cn(
           "relative z-10 flex min-h-[inherit] w-full flex-col justify-center",
-          "px-8 py-16 md:px-[136px] xl:pl-[292px] xl:pr-[136px]",
+          "px-8 py-16 md:px-[136px] xl:pl-[292px] xl:pr-[136px] transform scale-80",
         )}
       >
         <div className="flex items-center gap-4">

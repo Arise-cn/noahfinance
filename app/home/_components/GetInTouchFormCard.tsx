@@ -9,10 +9,12 @@ import { useContactFormAntiAbuse } from "@/hooks/useContactFormAntiAbuse";
 import { useEmailJs } from "@/hooks/useEmailJs";
 import { cn } from "@/utils/cn";
 import {
+  forwardRef,
   type FormEvent,
   type ReactNode,
   useId,
   useMemo,
+  useRef,
   useState,
 } from "react";
 
@@ -46,6 +48,25 @@ function ChevronDownIcon({ className }: { className?: string }) {
   );
 }
 
+function CalendarIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={cn("size-5 shrink-0 text-[#e8d587]", className)}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden
+    >
+      <path
+        d="M8 3v3M16 3v3M4 9h16M6 5h12a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 function FieldLabel({
   children,
   required,
@@ -61,25 +82,25 @@ function FieldLabel({
   );
 }
 
-function TextInput({
-  id,
-  name,
-  placeholder,
-  type = "text",
-  bordered,
-  value,
-  onChange,
-}: {
-  id: string;
-  name: string;
-  placeholder: string;
-  type?: string;
-  bordered?: boolean;
-  value: string;
-  onChange: (v: string) => void;
-}) {
+const TextInput = forwardRef<
+  HTMLInputElement,
+  {
+    id: string;
+    name: string;
+    placeholder: string;
+    type?: string;
+    bordered?: boolean;
+    className?: string;
+    value: string;
+    onChange: (v: string) => void;
+  }
+>(function TextInput(
+  { id, name, placeholder, type = "text", bordered, className, value, onChange },
+  ref,
+) {
   return (
     <input
+      ref={ref}
       id={id}
       name={name}
       type={type}
@@ -89,10 +110,11 @@ function TextInput({
       className={cn(
         "h-12 w-full rounded-[4px] bg-[#2a2a2a] px-4 font-inter text-[16px] text-white outline-none placeholder:text-[#767676]",
         bordered && "border border-solid border-[#e8d587]",
+        className,
       )}
     />
   );
-}
+});
 
 function SelectInput({
   id,
@@ -171,6 +193,7 @@ const GetInTouchFormCard = ({
 
   const [validationError, setValidationError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const preferredDateInputRef = useRef<HTMLInputElement | null>(null);
 
   const fieldId = (key: string) => `${baseId}-${key}`;
 
@@ -283,6 +306,20 @@ const GetInTouchFormCard = ({
     }
   };
 
+  const openPreferredDatePicker = () => {
+    const input = preferredDateInputRef.current;
+    if (!input) return;
+    const pickerInput = input as HTMLInputElement & {
+      showPicker?: () => void;
+    };
+    if (typeof pickerInput.showPicker === "function") {
+      pickerInput.showPicker();
+      return;
+    }
+    input.focus();
+    input.click();
+  };
+
   return (
     <div
       className={cn(
@@ -392,14 +429,27 @@ const GetInTouchFormCard = ({
             <label htmlFor={fieldId("date")}>
               <FieldLabel required>Preferred Date</FieldLabel>
             </label>
-            <TextInput
-              id={fieldId("date")}
-              name="preferredDate"
-              type="date"
-              placeholder=""
-              value={preferredDate}
-              onChange={setPreferredDate}
-            />
+            <div className="relative">
+              <TextInput
+                id={fieldId("date")}
+                name="preferredDate"
+                type="date"
+                className="gold-date-input pr-10"
+                placeholder=""
+                value={preferredDate}
+                onChange={setPreferredDate}
+                ref={preferredDateInputRef}
+              />
+              <button
+                type="button"
+                aria-label="Open preferred date picker"
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={openPreferredDatePicker}
+                className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
+              >
+                <CalendarIcon />
+              </button>
+            </div>
           </div>
 
           <div className="flex flex-col gap-4">
@@ -489,9 +539,9 @@ const GetInTouchFormCard = ({
                 : "bg-[#2a2a2a] text-[#3f3f3f] hover:bg-[#353535] hover:text-[#e8d587]",
               "disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none",
               !submitHighlighted &&
-                "disabled:hover:bg-[#2a2a2a] disabled:hover:text-[#3f3f3f]",
+              "disabled:hover:bg-[#2a2a2a] disabled:hover:text-[#3f3f3f]",
               submitHighlighted &&
-                "disabled:hover:bg-[#e8d587] disabled:hover:text-[#1a1a1a]",
+              "disabled:hover:bg-[#e8d587] disabled:hover:text-[#1a1a1a]",
             )}
           >
             {sending
