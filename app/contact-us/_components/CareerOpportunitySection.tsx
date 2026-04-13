@@ -63,8 +63,10 @@ function NumberedList({ items }: { items: readonly string[] }) {
   );
 }
 
-export default function AboutOverviewSection() {
-  const handleCopyEmail = async (event: React.MouseEvent<HTMLButtonElement>) => {
+export default function CareerOpportunitySection() {
+  const handleCopyEmail = async (
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
     event.preventDefault();
     event.stopPropagation();
 
@@ -85,26 +87,13 @@ export default function AboutOverviewSection() {
   return (
     <div className="pb-16">
       <h1 className="font-misans text-[52px] font-black leading-normal text-white">
-        About Us
+        CAREER OPPORTUNITY
       </h1>
 
-      <p className="mt-10 font-inter text-[18px] font-light leading-8 text-white">
-        <span className="text-[32px] font-semibold text-[#e8d587]">
-          At Noah Finance
-        </span>
-        , we are not just mortgage brokers - we are a young, ambitious team
-        helping Australians achieve their home ownership dreams. Led by an
-        industry mentor with over 10 years of frontline experience, we provide
-        the tools, training, and client leads you need to succeed in this
-        rewarding career.
-      </p>
-
-      <div className="my-16 h-px w-full bg-linear-to-r from-[#403f38] via-[#e8d587] via-[52.712%] to-[#403f38]" />
-
-      <h2 className="font-misans text-[52px] font-black leading-normal text-white">
+      <h2 className="mt-16 font-misans text-2xl font-black text-white">
         The Role
       </h2>
-      <p className="mt-10 font-inter text-[18px] font-light leading-8 text-white">
+      <p className="mt-6 font-inter text-[18px] font-light leading-8 text-white">
         You will join a supportive environment where learning, collaboration,
         and growth come first. This role suits someone who is self-driven,
         enjoys helping people, and wants to build a long-term career in mortgage
@@ -145,7 +134,7 @@ export default function AboutOverviewSection() {
           Send your resume to
         </span>
         <div className="about-email-frame inline-flex">
-          <span className="about-email-inner inline-flex items-center gap-3 px-4 py-2 bg-[#0f0f0f]">
+          <span className="about-email-inner inline-flex items-center gap-3 bg-[#0f0f0f] px-4 py-2">
             <a
               href="mailto:recruitment@noahfinance.com.au"
               className="font-inter text-[18px] font-medium text-[#e8d587]"

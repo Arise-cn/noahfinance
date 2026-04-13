@@ -1,7 +1,12 @@
-import { redirect } from "next/navigation";
+import AboutSubPageShell from "./_components/AboutSubPageShell";
+import AboutTeamSection from "./_components/AboutTeamSection";
 
 const AboutUsPage = () => {
-  redirect("/about-us/our-team");
+  return (
+    <AboutSubPageShell>
+      <AboutTeamSection />
+    </AboutSubPageShell>
+  );
 };
 
 export default AboutUsPage;

@@ -1,17 +1,19 @@
 "use client";
 
-import { ABOUT_SUB_ROUTES } from "@/constants/about-us";
+import { CONTACT_US_SUB_ROUTES } from "@/constants/contact-us";
 import { cn } from "@/utils/cn";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { RefObject } from "react";
 import type { PopupActions } from "reactjs-popup/dist/types";
 
-type AboutUsPopupMenuProps = {
+type ContactUsPopupMenuProps = {
   popupRef: RefObject<PopupActions | null>;
 };
 
-export default function AboutUsPopupMenu({ popupRef }: AboutUsPopupMenuProps) {
+export default function ContactUsPopupMenu({
+  popupRef,
+}: ContactUsPopupMenuProps) {
   const pathname = usePathname();
 
   const onNavigate = () => {
@@ -21,15 +23,17 @@ export default function AboutUsPopupMenu({ popupRef }: AboutUsPopupMenuProps) {
   return (
     <div className="home-service-expanded-frame w-full max-w-[312px] overflow-hidden rounded-[24px]">
       <nav
-        className="home-service-expanded-inner px-4 py-10 bg-[#0f0f0f]"
-        aria-label="About us sections"
+        className="home-service-expanded-inner bg-[#0f0f0f] px-4 py-10"
+        aria-label="Contact us sections"
       >
         <ul className="mx-auto flex w-[280px] max-w-full list-none flex-col gap-3 p-0">
-          {ABOUT_SUB_ROUTES.map((route) => {
-            const href = `/about-us/${route.slug}`;
+          {CONTACT_US_SUB_ROUTES.map((route) => {
+            const href = route.slug
+              ? `/contact-us/${route.slug}`
+              : "/contact-us";
             const isActive = pathname === href;
             return (
-              <li key={route.slug}>
+              <li key={route.navLabel}>
                 <Link
                   href={href}
                   onClick={onNavigate}

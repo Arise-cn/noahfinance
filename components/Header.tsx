@@ -1,6 +1,6 @@
 "use client";
 
-import AboutUsPopupMenu from "@/components/AboutUsPopupMenu";
+import ContactUsPopupMenu from "./ContactUsPopupMenu";
 import LoansPopupMenu from "@/components/LoansPopupMenu";
 import { NAV_ITEMS } from "@/constants/nav";
 import { cn } from "@/utils/cn";
@@ -11,7 +11,6 @@ import {
   forwardRef,
   useEffect,
   useRef,
-  useState,
   type ComponentPropsWithoutRef,
 } from "react";
 import type { PopupActions } from "reactjs-popup/dist/types";
@@ -20,6 +19,7 @@ import "reactjs-popup/dist/index.css";
 
 const LOANS_HREF = "/loans";
 const ABOUT_US_HREF = "/about-us";
+const CONTACT_US_HREF = "/contact-us";
 
 function ChevronDown({ className }: { className?: string }) {
   return (
@@ -80,12 +80,7 @@ function LoansHeaderNavItem({
   pathname: string;
 }) {
   const router = useRouter();
-  const [popupMounted, setPopupMounted] = useState(false);
   const loansPopupRef = useRef<PopupActions>(null);
-
-  useEffect(() => {
-    setPopupMounted(true);
-  }, []);
 
   useEffect(() => {
     const id = window.setTimeout(() => {
@@ -94,7 +89,7 @@ function LoansHeaderNavItem({
     return () => window.clearTimeout(id);
   }, [pathname]);
 
-  if (!popupMounted) {
+  if (typeof window === "undefined") {
     return (
       <LoansNavTrigger
         label={item.name}
@@ -141,7 +136,7 @@ function LoansHeaderNavItem({
   );
 }
 
-function AboutUsHeaderNavItem({
+function ContactUsHeaderNavItem({
   item,
   pathname,
 }: {
@@ -149,41 +144,36 @@ function AboutUsHeaderNavItem({
   pathname: string;
 }) {
   const router = useRouter();
-  const [popupMounted, setPopupMounted] = useState(false);
-  const aboutUsPopupRef = useRef<PopupActions>(null);
-
-  useEffect(() => {
-    setPopupMounted(true);
-  }, []);
+  const contactUsPopupRef = useRef<PopupActions>(null);
 
   useEffect(() => {
     const id = window.setTimeout(() => {
-      aboutUsPopupRef.current?.close();
+      contactUsPopupRef.current?.close();
     }, 0);
     return () => window.clearTimeout(id);
   }, [pathname]);
 
-  if (!popupMounted) {
+  if (typeof window === "undefined") {
     return (
       <LoansNavTrigger
         label={item.name}
         menuOpen={false}
         pathname={pathname}
-        baseHref={ABOUT_US_HREF}
-        onClick={() => router.push("/about-us/our-team")}
+        baseHref={CONTACT_US_HREF}
+        onClick={() => router.push(CONTACT_US_HREF)}
       />
     );
   }
 
   return (
     <Popup
-      ref={aboutUsPopupRef}
+      ref={contactUsPopupRef}
       trigger={(open: boolean) => (
         <LoansNavTrigger
           label={item.name}
           menuOpen={open}
           pathname={pathname}
-          baseHref={ABOUT_US_HREF}
+          baseHref={CONTACT_US_HREF}
         />
       )}
       position="bottom center"
@@ -207,7 +197,7 @@ function AboutUsHeaderNavItem({
         zIndex: 99,
       }}
     >
-      <AboutUsPopupMenu popupRef={aboutUsPopupRef} />
+      <ContactUsPopupMenu popupRef={contactUsPopupRef} />
     </Popup>
   );
 }
@@ -230,7 +220,41 @@ const HeaderNav = () => {
           }
           if (item.href === ABOUT_US_HREF) {
             return (
-              <AboutUsHeaderNavItem
+              <Link
+                key={item.href}
+                className={cn(
+                  "relative z-0 flex h-[48px] items-center justify-center overflow-hidden rounded-full bg-[#05050580] px-[32px] uppercase",
+                  "font-inter text-[20px] font-semibold tracking-[0.02em]",
+                )}
+                href={item.href}
+              >
+                {pathname.startsWith(ABOUT_US_HREF) ? (
+                  <motion.span
+                    layoutId="header-nav-active-pill"
+                    className="absolute inset-0 rounded-full bg-[#343434]"
+                    transition={{
+                      type: "spring",
+                      stiffness: 400,
+                      damping: 35,
+                    }}
+                  />
+                ) : null}
+                <span
+                  className={cn(
+                    "relative z-10",
+                    pathname.startsWith(ABOUT_US_HREF)
+                      ? "font-bold text-[#FFF2BA]"
+                      : "text-[#E8D587]",
+                  )}
+                >
+                  {item.name}
+                </span>
+              </Link>
+            );
+          }
+          if (item.href === CONTACT_US_HREF) {
+            return (
+              <ContactUsHeaderNavItem
                 key={item.href}
                 item={item}
                 pathname={pathname}
