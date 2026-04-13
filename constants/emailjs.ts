@@ -4,7 +4,6 @@
  * NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=
  * NEXT_PUBLIC_EMAILJS_CONTACT_TEMPLATE_ID=（联系页 /contact-us，专用）
  * NEXT_PUBLIC_EMAILJS_GET_IN_TOUCH_TEMPLATE_ID=（首页 Get in touch，专用）
- * 兼容旧变量：若未设置 CONTACT，仍可读 NEXT_PUBLIC_EMAILJS_TEMPLATE_ID 作为联系页模板
  */
 export const EMAILJS_CONFIG = {
   serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ?? "",
@@ -13,9 +12,7 @@ export const EMAILJS_CONFIG = {
 
 /** 联系页 `/contact-us` 专用模板 ID */
 export const EMAILJS_CONTACT_TEMPLATE_ID =
-  process.env.NEXT_PUBLIC_EMAILJS_CONTACT_TEMPLATE_ID ??
-  process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID ??
-  "";
+  process.env.NEXT_PUBLIC_EMAILJS_CONTACT_TEMPLATE_ID;
 
 /** 首页 Get in touch 专用模板 ID（与联系页分开配置） */
 export const EMAILJS_GET_IN_TOUCH_TEMPLATE_ID =
