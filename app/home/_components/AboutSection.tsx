@@ -13,7 +13,7 @@ const ABOUT_PARAGRAPHS = [
 ] as const;
 
 const ABOUT_INTRO = ABOUT_PARAGRAPHS[0];
-const ABOUT_SCROLL_PARAGRAPHS = ABOUT_PARAGRAPHS.slice(1);
+const ABOUT_SCROLL_PARAGRAPHS = ABOUT_PARAGRAPHS.slice(0);
 
 const REVEAL_OFFSET_PX = 72;
 
@@ -114,9 +114,9 @@ const AboutSection = () => {
             <p className="font-misans text-[52px] font-black text-white shrink-0">
               WHO WE ARE
             </p>
-            <p className="font-inter font-semibold mt-[35px] shrink-0 text-[24px] leading-normal text-[#E8D587]">
+            {/* <p className="font-inter font-semibold mt-[35px] shrink-0 text-[24px] leading-normal text-[#E8D587]">
               {ABOUT_INTRO}
-            </p>
+            </p> */}
             <div className="relative mt-[35px] min-h-0 flex-1 overflow-hidden">
               <motion.div
                 ref={contentRef}
