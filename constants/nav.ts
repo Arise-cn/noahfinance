@@ -1,16 +1,14 @@
+import { LOAN_SUB_ROUTES } from "@/constants/loans";
+
 export const NAV_ITEMS = [
   {
     name: "Home",
     href: "/home",
   },
-  {
-    name: "About Us",
-    href: "/about-us",
-  },
-  {
-    name: "Loans",
-    href: "/loans",
-  },
+  ...LOAN_SUB_ROUTES.map((route) => ({
+    name: route.navLabel,
+    href: `/loans/${route.slug}`,
+  })),
   {
     name: "Contact Us",
     href: "/contact-us",

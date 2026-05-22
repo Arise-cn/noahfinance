@@ -1,7 +1,6 @@
 "use client";
 
 import ContactUsPopupMenu from "./ContactUsPopupMenu";
-import LoansPopupMenu from "@/components/LoansPopupMenu";
 import { NAV_ITEMS } from "@/constants/nav";
 import { cn } from "@/utils/cn";
 import { motion } from "motion/react";
@@ -18,15 +17,16 @@ import type { PopupActions } from "reactjs-popup/dist/types";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 
-const LOANS_HREF = "/loans";
-const ABOUT_US_HREF = "/about-us";
 const CONTACT_US_HREF = "/contact-us";
+
+const NAV_TAB_CLASS =
+  "relative z-0 flex h-[40px] items-center justify-center overflow-hidden rounded-full bg-[#05050580] px-[20px] uppercase font-inter text-[14px] font-semibold tracking-[0.02em]";
 
 function ChevronDown({ className }: { className?: string }) {
   return (
     <svg
-      width={16}
-      height={16}
+      width={14}
+      height={14}
       viewBox="0 0 16 16"
       fill="none"
       className={cn(
@@ -81,71 +81,6 @@ function useHydrated() {
   );
 }
 
-function LoansHeaderNavItem({
-  item,
-  pathname,
-}: {
-  item: NavItem;
-  pathname: string;
-}) {
-  const router = useRouter();
-  const hydrated = useHydrated();
-  const loansPopupRef = useRef<PopupActions>(null);
-
-  useEffect(() => {
-    const id = window.setTimeout(() => {
-      loansPopupRef.current?.close();
-    }, 0);
-    return () => window.clearTimeout(id);
-  }, [pathname]);
-
-  if (!hydrated) {
-    return (
-      <LoansNavTrigger
-        label={item.name}
-        menuOpen={false}
-        pathname={pathname}
-        onClick={() => router.push(LOANS_HREF)}
-      />
-    );
-  }
-
-  return (
-    <Popup
-      ref={loansPopupRef}
-      trigger={(open: boolean) => (
-        <LoansNavTrigger
-          label={item.name}
-          menuOpen={open}
-          pathname={pathname}
-        />
-      )}
-      position="bottom center"
-      offsetY={10}
-      on={["click", "hover"]}
-      mouseLeaveDelay={250}
-      arrow={false}
-      closeOnDocumentClick
-      closeOnEscape
-      nested
-      contentStyle={{
-        width: "auto",
-        padding: 0,
-        background: "transparent",
-        border: "none",
-        boxShadow: "none",
-        zIndex: 100,
-      }}
-      overlayStyle={{
-        background: "transparent",
-        zIndex: 99,
-      }}
-    >
-      <LoansPopupMenu popupRef={loansPopupRef} />
-    </Popup>
-  );
-}
-
 function ContactUsHeaderNavItem({
   item,
   pathname,
@@ -166,7 +101,7 @@ function ContactUsHeaderNavItem({
 
   if (!hydrated) {
     return (
-      <LoansNavTrigger
+      <NavPopupTrigger
         label={item.name}
         menuOpen={false}
         pathname={pathname}
@@ -180,7 +115,7 @@ function ContactUsHeaderNavItem({
     <Popup
       ref={contactUsPopupRef}
       trigger={(open: boolean) => (
-        <LoansNavTrigger
+        <NavPopupTrigger
           label={item.name}
           menuOpen={open}
           pathname={pathname}
@@ -220,49 +155,6 @@ const HeaderNav = () => {
     <div className="header-phone-pill-frame flex h-[44px] justify-self-end overflow-hidden">
       <div className="header-phone-pill-inner flex h-full w-full items-center justify-center overflow-hidden rounded-full">
         {NAV_ITEMS.map((item) => {
-          if (item.href === LOANS_HREF) {
-            return (
-              <LoansHeaderNavItem
-                key={item.href}
-                item={item}
-                pathname={pathname}
-              />
-            );
-          }
-          if (item.href === ABOUT_US_HREF) {
-            return (
-              <Link
-                key={item.href}
-                className={cn(
-                  "relative z-0 flex h-[48px] items-center justify-center overflow-hidden rounded-full bg-[#05050580] px-[32px] uppercase",
-                  "font-inter text-[20px] font-semibold tracking-[0.02em]",
-                )}
-                href={item.href}
-              >
-                {pathname.startsWith(ABOUT_US_HREF) ? (
-                  <motion.span
-                    layoutId="header-nav-active-pill"
-                    className="absolute inset-0 rounded-full bg-[#343434]"
-                    transition={{
-                      type: "spring",
-                      stiffness: 400,
-                      damping: 35,
-                    }}
-                  />
-                ) : null}
-                <span
-                  className={cn(
-                    "relative z-10",
-                    pathname.startsWith(ABOUT_US_HREF)
-                      ? "font-bold text-[#FFF2BA]"
-                      : "text-[#E8D587]",
-                  )}
-                >
-                  {item.name}
-                </span>
-              </Link>
-            );
-          }
           if (item.href === CONTACT_US_HREF) {
             return (
               <ContactUsHeaderNavItem
@@ -276,14 +168,7 @@ const HeaderNav = () => {
           const isActive =
             pathname === item.href || pathname.startsWith(`${item.href}/`);
           return (
-            <Link
-              key={item.href}
-              className={cn(
-                "relative z-0 flex h-[48px] items-center justify-center overflow-hidden rounded-full bg-[#05050580] px-[32px] uppercase",
-                "font-inter text-[20px] font-semibold tracking-[0.02em]",
-              )}
-              href={item.href}
-            >
+            <Link key={item.href} className={NAV_TAB_CLASS} href={item.href}>
               {isActive ? (
                 <motion.span
                   layoutId="header-nav-active-pill"
@@ -311,16 +196,16 @@ const HeaderNav = () => {
   );
 };
 
-type LoansNavTriggerProps = {
+type NavPopupTriggerProps = {
   label: string;
   menuOpen: boolean;
   pathname: string;
-  baseHref?: string;
+  baseHref: string;
 } & ComponentPropsWithoutRef<"button">;
 
-const LoansNavTrigger = forwardRef<HTMLButtonElement, LoansNavTriggerProps>(
-  function LoansNavTrigger(
-    { label, menuOpen, pathname, baseHref = LOANS_HREF, className, ...rest },
+const NavPopupTrigger = forwardRef<HTMLButtonElement, NavPopupTriggerProps>(
+  function NavPopupTrigger(
+    { label, menuOpen, pathname, baseHref, className, ...rest },
     ref,
   ) {
     const isActive = pathname.startsWith(baseHref);
@@ -331,11 +216,7 @@ const LoansNavTrigger = forwardRef<HTMLButtonElement, LoansNavTriggerProps>(
         type="button"
         aria-expanded={menuOpen}
         aria-haspopup="true"
-        className={cn(
-          "relative z-0 flex h-[48px] items-center justify-center overflow-hidden rounded-full bg-[#05050580] px-[32px] uppercase",
-          "font-inter text-[20px] font-semibold tracking-[0.02em]",
-          className,
-        )}
+        className={cn(NAV_TAB_CLASS, className)}
         {...rest}
       >
         {isActive ? (

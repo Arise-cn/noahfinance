@@ -21,12 +21,12 @@ export default function ContactUsPopupMenu({
   };
 
   return (
-    <div className="home-service-expanded-frame w-full max-w-[312px] overflow-hidden rounded-[24px]">
+    <div className="home-service-expanded-frame w-full max-w-[240px] overflow-hidden rounded-[24px]">
       <nav
-        className="home-service-expanded-inner bg-[#0f0f0f] px-4 py-10"
+        className="home-service-expanded-inner bg-[#0f0f0f] px-3 py-5"
         aria-label="Contact us sections"
       >
-        <ul className="mx-auto flex w-[280px] max-w-full list-none flex-col gap-3 p-0">
+        <ul className="mx-auto flex w-[216px] max-w-full list-none flex-col gap-2 p-0">
           {CONTACT_US_SUB_ROUTES.map((route) => {
             const href = route.slug
               ? `/contact-us/${route.slug}`
@@ -38,7 +38,7 @@ export default function ContactUsPopupMenu({
                   href={href}
                   onClick={onNavigate}
                   className={cn(
-                    "flex h-12 w-full items-center rounded-[12px] px-4 py-3 font-inter text-[20px] font-semibold leading-normal transition-colors",
+                    "flex h-9 w-full items-center rounded-[8px] px-3 py-2 font-inter text-[14px] font-semibold leading-normal transition-colors",
                     isActive
                       ? "bg-[#161718] text-[#e7d487]"
                       : "bg-transparent text-white hover:bg-[#161718]/80 hover:text-[#e7d487]",
