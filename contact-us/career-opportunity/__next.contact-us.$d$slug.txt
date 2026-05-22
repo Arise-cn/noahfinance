@@ -1,5 +1,5 @@
 1:"$Sreact.fragment"
-2:I[39756,["/noahfinance/_next/static/chunks/14roc0wur4jrr.js","/noahfinance/_next/static/chunks/04mgfm2dm06hz.js","/noahfinance/_next/static/chunks/0d3shmwh5_nmn.js","/noahfinance/_next/static/chunks/16l9mhmy7-cvi.js","/noahfinance/_next/static/chunks/07x-3la3o-~0o.js"],"default"]
-3:I[37457,["/noahfinance/_next/static/chunks/14roc0wur4jrr.js","/noahfinance/_next/static/chunks/04mgfm2dm06hz.js","/noahfinance/_next/static/chunks/0d3shmwh5_nmn.js","/noahfinance/_next/static/chunks/16l9mhmy7-cvi.js","/noahfinance/_next/static/chunks/07x-3la3o-~0o.js"],"default"]
+2:I[39756,["/noahfinance/_next/static/chunks/14roc0wur4jrr.js","/noahfinance/_next/static/chunks/0h8k-m50v0hx7.js","/noahfinance/_next/static/chunks/0d3shmwh5_nmn.js","/noahfinance/_next/static/chunks/16l9mhmy7-cvi.js","/noahfinance/_next/static/chunks/07x-3la3o-~0o.js"],"default"]
+3:I[37457,["/noahfinance/_next/static/chunks/14roc0wur4jrr.js","/noahfinance/_next/static/chunks/0h8k-m50v0hx7.js","/noahfinance/_next/static/chunks/0d3shmwh5_nmn.js","/noahfinance/_next/static/chunks/16l9mhmy7-cvi.js","/noahfinance/_next/static/chunks/07x-3la3o-~0o.js"],"default"]
 4:[]
-0:{"rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"isPartial":false,"staleTime":300,"varyParams":"$W4","buildId":"AxRchJZvMYSe2nqx9mf9f"}
+0:{"rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"isPartial":false,"staleTime":300,"varyParams":"$W4","buildId":"nv4y7eIPEctHE8vd1xG4e"}
