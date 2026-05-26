@@ -1,3 +1,3 @@
-:HL["/noahfinance/_next/static/chunks/0xpj79nyw-ylm.css","style"]
-:HL["/noahfinance/images/text_logo.png","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"JfBJA5V39bUXfXIAcO_SX"}
+:HL["/_next/static/chunks/0xpj79nyw-ylm.css","style"]
+:HL["/images/text_logo.png","image"]
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"I5zYqtCwF641clgHVxwHH"}
